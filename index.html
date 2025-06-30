@@ -1,6 +1,13 @@
-<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
+  <!-- أضف في head -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'">
+  <!-- أضف في head -->
+<meta name="description" content="موقع كلية الطب بمسيلة - موارد تعليمية لطلاب الطب من السنة الأولى إلى السابعة">
+<meta name="keywords" content="طب, مسيلة, كلية, موارد, دروس, طلاب">
+<meta property="og:title" content="FACULTY DE MEDECINE MSILA">
+<meta property="og:description" content="الموقع الرسمي لكلية الطب بمسيلة">
+<link rel="canonical" href="https://yourwebsite.com">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FACULTY DE MEDECINE MSILA</title>
@@ -301,7 +308,26 @@
         body.dark-mode .search-result-item a {
             color: red !important;
         }
-
+      /* إضافة في الـ CSS */
+@media (max-width: 768px) {
+  .years-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .site-title {
+    font-size: 1.5rem;
+  }
+  
+  .search-input {
+    width: 100%;
+  }
+  
+  .theme-toggle {
+    top: 0.5rem;
+    right: 0.5rem;
+    padding: 0.5rem 1rem;
+  }
+}
         /* (اختياري) إضافة تأثير عند المرور */
         body.dark-mode .search-result-item a:hover {
             color: #ff6666 !important;
@@ -589,7 +615,14 @@
                 }
             ]
         };
-
+// طلب الإذن للإشعارات
+if ('Notification' in window) {
+  Notification.requestPermission().then(permission => {
+    if (permission === 'granted') {
+      new Notification('شكراً لتفعيل الإشعارات!');
+    }
+  });
+}
         // إظهار الدروس حسب السنة
         const yearButtons = document.querySelectorAll('.year-btn');
         const selectedYearTitle = document.getElementById('selected-year-title');
