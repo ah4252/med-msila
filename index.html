@@ -1,0 +1,4017 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Untitled</title>
+    
+
+  </head>
+    
+  <body>
+  <html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedGpa - نبض الطب</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            /* Modern Medical Palette */
+            --primary: #3b82f6;
+            /* Bright Royal Blue */
+            --primary-dark: #2563eb;
+            --secondary: #0f172a;
+            /* Slate 900 */
+            --light: #f8fafc;
+            --gray: #64748b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+
+            /* Accents */
+            --accent-1: #8b5cf6;
+            /* Violet */
+            --accent-2: #ec4899;
+            /* Pink */
+            --accent-3: #f59e0b;
+            /* Amber */
+            --accent-4: #10b981;
+            /* Emerald */
+            --accent-5: #06b6d4;
+            /* Cyan */
+
+            /* Glassmorphism Variables */
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            --blur-amount: 12px;
+
+            /* Gradients */
+            --header-bg: rgba(255, 255, 255, 0.8);
+            --gradient-1: linear-gradient(135deg, #60a5fa, #a78bfa);
+            --gradient-2: linear-gradient(135deg, #2dd4bf, #3b82f6);
+
+            /* Text */
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+        }
+
+        .dark-mode {
+            --primary: #60a5fa;
+            --primary-dark: #3b82f6;
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+
+            /* Dark Glass */
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+
+            --header-bg: rgba(15, 23, 42, 0.8);
+            --gradient-1: linear-gradient(135deg, #818cf8, #c084fc);
+        }
+
+        body {
+            background-color: #f0f9ff;
+            background-image:
+                radial-gradient(at 0% 0%, hsla(253, 16%, 7%, 1) 0, transparent 50%),
+                radial-gradient(at 50% 0%, hsla(225, 39%, 30%, 1) 0, transparent 50%),
+                radial-gradient(at 100% 0%, hsla(339, 49%, 30%, 1) 0, transparent 50%);
+            background-size: 200% 200%;
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+            transition: all 0.3s ease;
+            min-height: 100vh;
+        }
+
+        .dark-mode body {
+            background-image:
+                radial-gradient(at 0% 0%, hsla(253, 16%, 7%, 1) 0, transparent 50%),
+                radial-gradient(at 50% 0%, hsla(225, 39%, 30%, 1) 0, transparent 50%),
+                radial-gradient(at 100% 0%, hsla(339, 49%, 30%, 1) 0, transparent 50%);
+        }
+
+        /* Light mode animated mesh gradient override */
+        body {
+            background:
+                radial-gradient(at 40% 20%, hsla(215, 98%, 61%, 0.2) 0px, transparent 50%),
+                radial-gradient(at 80% 0%, hsla(189, 100%, 56%, 0.2) 0px, transparent 50%),
+                radial-gradient(at 0% 50%, hsla(341, 100%, 76%, 0.2) 0px, transparent 50%),
+                radial-gradient(at 80% 50%, hsla(269, 100%, 77%, 0.2) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, hsla(320, 100%, 82%, 0.2) 0px, transparent 50%),
+                radial-gradient(at 80% 100%, hsla(205, 100%, 60%, 0.2) 0px, transparent 50%),
+                radial-gradient(at 0% 0%, hsla(280, 100%, 77%, 0.2) 0px, transparent 50%);
+            background-size: 200% 200%;
+            animation: meshGradient 20s ease infinite;
+        }
+
+        /* Reading Progress Bar */
+        #reading-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg,
+                    #3b82f6,
+                    #8b5cf6,
+                    #ec4899,
+                    #f59e0b);
+            background-size: 200% 100%;
+            animation: gradientShift 3s ease infinite;
+            z-index: 9999;
+            transition: width 0.1s ease-out;
+            box-shadow: 0 2px 10px rgba(59, 130, 246, 0.5);
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Scroll to Top Button */
+        #scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(100px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 9998;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #scroll-to-top.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        #scroll-to-top:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 8px 30px rgba(59, 130, 246, 0.6);
+        }
+
+        #scroll-to-top:active {
+            transform: translateY(-2px) scale(1.05);
+        }
+
+        .dark-mode #scroll-to-top {
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+        }
+
+        /* Search Modal */
+        #search-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 10000;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 10vh;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        #search-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .search-container {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95));
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+        }
+
+        #search-modal.active .search-container {
+            transform: translateY(0);
+        }
+
+        .dark-mode .search-container {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.98), rgba(15, 23, 42, 0.95));
+        }
+
+        .search-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-header h3 {
+            color: var(--primary-dark);
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .dark-mode .search-header h3 {
+            color: #c4b5fd;
+        }
+
+        .search-close {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            line-height: 1;
+        }
+
+        .search-close:hover {
+            color: var(--primary);
+            transform: rotate(90deg);
+        }
+
+        .search-input-wrapper {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        #search-input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border: 2px solid rgba(99, 102, 241, 0.2);
+            border-radius: 16px;
+            font-size: 1.1rem;
+            background: rgba(255, 255, 255, 0.8);
+            transition: all 0.3s ease;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        #search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+        }
+
+        .dark-mode #search-input {
+            background: rgba(15, 23, 42, 0.8);
+            color: white;
+        }
+
+        .search-results {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .search-result-item {
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .search-result-item:hover {
+            background: rgba(99, 102, 241, 0.15);
+            transform: translateX(5px);
+        }
+
+        .search-result-title {
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 0.3rem;
+        }
+
+        .dark-mode .search-result-title {
+            color: #c4b5fd;
+        }
+
+        .search-result-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .search-no-results {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+        }
+
+        /* Toast Notifications */
+        .toast-notification {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: white;
+            padding: 1rem 1.2rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            min-width: 300px;
+            opacity: 0;
+            transform: translateX(400px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-left: 4px solid #3b82f6;
+        }
+
+        .toast-notification.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .dark-mode .toast-notification {
+            background: rgba(30, 41, 59, 0.95);
+            color: white;
+        }
+
+        .toast-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .toast-content {
+            flex: 1;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        .toast-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .toast-close:hover {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .toast-success {
+            border-left-color: #10b981;
+        }
+
+        .toast-error {
+            border-left-color: #ef4444;
+        }
+
+        .toast-warning {
+            border-left-color: #f59e0b;
+        }
+
+        .toast-info {
+            border-left-color: #3b82f6;
+        }
+
+        .toast-motivational {
+            border-left-color: #8b5cf6;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(236, 72, 153, 0.1));
+        }
+
+        .dark-mode .toast-motivational {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(236, 72, 153, 0.2));
+        }
+
+        /* Focus Mode */
+        #focus-mode-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        #focus-mode-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .focus-mode-panel {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            padding: 3rem;
+            text-align: center;
+            color: white;
+            max-width: 500px;
+        }
+
+        .focus-mode-panel h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .pomodoro-timer {
+            margin: 2rem 0;
+        }
+
+        .timer-display {
+            font-size: 4rem;
+            font-weight: 700;
+            font-family: 'Courier New', monospace;
+            color: #f59e0b;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
+        }
+
+        .timer-controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .timer-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .timer-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .exit-focus-btn {
+            margin-top: 2rem;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            border: none;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .exit-focus-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(239, 68, 68, 0.4);
+        }
+
+        /* Achievements Panel */
+        #achievements-panel {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100vh;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95));
+            backdrop-filter: blur(20px);
+            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.2);
+            z-index: 10002;
+            transition: right 0.3s ease;
+            overflow-y: auto;
+        }
+
+        #achievements-panel.active {
+            right: 0;
+        }
+
+        .dark-mode #achievements-panel {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.98), rgba(15, 23, 42, 0.95));
+        }
+
+        .achievements-content {
+            padding: 2rem;
+        }
+
+        .achievements-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .achievements-header h2 {
+            color: var(--primary-dark);
+            font-size: 1.8rem;
+            margin: 0;
+        }
+
+        .dark-mode .achievements-header h2 {
+            color: #fbbf24;
+        }
+
+        .close-achievements {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .close-achievements:hover {
+            color: var(--primary);
+            transform: rotate(90deg);
+        }
+
+        .points-display {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(245, 158, 11, 0.1));
+            border-radius: 16px;
+            margin-bottom: 2rem;
+        }
+
+        .points-circle {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1rem;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(251, 191, 36, 0.4);
+        }
+
+        .points-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .points-label {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .badges-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .badge-item {
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .badge-item.unlocked {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(245, 158, 11, 0.1));
+            border-color: #fbbf24;
+        }
+
+        .badge-item.locked {
+            background: rgba(0, 0, 0, 0.05);
+            opacity: 0.5;
+        }
+
+        .dark-mode .badge-item.locked {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .badge-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .badge-item.locked .badge-icon {
+            filter: grayscale(100%);
+        }
+
+        .badge-name {
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 0.3rem;
+        }
+
+        .dark-mode .badge-name {
+            color: #fbbf24;
+        }
+
+        .badge-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .progress-section {
+            margin-top: 2rem;
+        }
+
+        .progress-section h3 {
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+        }
+
+        .dark-mode .progress-section h3 {
+            color: #c4b5fd;
+        }
+
+        .progress-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 8px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .dark-mode .progress-bar {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #fbbf24, #f59e0b);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        /* Study Calendar */
+        #calendar-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 10003;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        #calendar-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .calendar-container {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95));
+            border-radius: 24px;
+            padding: 2rem;
+            width: 95%;
+            max-width: 500px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        #calendar-modal.active .calendar-container {
+            transform: scale(1);
+        }
+
+        .dark-mode .calendar-container {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.98), rgba(15, 23, 42, 0.95));
+            color: white;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .calendar-header h2 {
+            font-size: 1.5rem;
+            color: var(--primary-dark);
+        }
+
+        .dark-mode .calendar-header h2 {
+            color: #10b981;
+        }
+
+        .calendar-weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            text-align: center;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+
+        .calendar-day,
+        .empty-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+
+        .calendar-day {
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .calendar-day:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .calendar-day.today {
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            font-weight: 800;
+        }
+
+        .calendar-day.has-event {
+            background: rgba(16, 185, 129, 0.15);
+            position: relative;
+        }
+
+        .calendar-day.has-event::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            width: 4px;
+            height: 4px;
+            background: #10b981;
+            border-radius: 50%;
+        }
+
+        .close-calendar {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+
+        .event-editor {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: rgba(16, 185, 129, 0.05);
+            border-radius: 16px;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        #event-input {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            margin: 1rem 0;
+            font-family: inherit;
+        }
+
+        .editor-btns {
+            display: flex;
+            gap: 10px;
+        }
+
+        .editor-btns button {
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+
+        .cancel-btn {
+            background: #eee !important;
+            color: #666 !important;
+        }
+
+        .dark-mode body {
+            background-color: #0f172a;
+            background-image:
+                radial-gradient(at 0% 0%, hsla(253, 16%, 7%, 1) 0, transparent 50%),
+                radial-gradient(at 50% 0%, hsla(225, 39%, 30%, 1) 0, transparent 50%),
+                radial-gradient(at 100% 0%, hsla(339, 49%, 30%, 1) 0, transparent 50%);
+            background-size: 200% 200%;
+        }
+
+        @keyframes meshGradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
+            color: var(--text-primary);
+            line-height: 1.8;
+            overflow-x: hidden;
+            transition: all 0.3s ease;
+            font-size: 17px;
+        }
+
+        /* Modern Button Styles */
+        .btn {
+            background: linear-gradient(135deg, var(--primary), var(--accent-5));
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 20px -5px var(--primary);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--accent-5), var(--primary));
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 30px -5px var(--primary);
+        }
+
+        .btn:hover::before {
+            opacity: 1;
+        }
+
+        /* Footer - Premium Glassmorphism */
+        footer {
+            background: linear-gradient(135deg,
+                    rgba(15, 23, 42, 0.98) 0%,
+                    rgba(30, 41, 59, 0.95) 100%);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            color: white;
+            padding: 4rem 0 2.5rem;
+            text-align: center;
+            margin-top: 5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            clear: both;
+            z-index: 500;
+        }
+
+        /* Animated gradient overlay */
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -50%;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(99, 102, 241, 0.1),
+                    rgba(168, 85, 247, 0.1),
+                    rgba(236, 72, 153, 0.1),
+                    transparent);
+            animation: shimmer 8s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%);
+            }
+
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        /* Decorative circles */
+        footer::after {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            right: -100px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.15), transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .footer-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-content p {
+            margin: 0.5rem 0;
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .copyright {
+            font-weight: 600;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 1.1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles - Premium Floating Glass */
+        header {
+            background: linear-gradient(135deg,
+                    rgba(255, 255, 255, 0.95) 0%,
+                    rgba(255, 255, 255, 0.85) 100%);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow:
+                0 8px 32px rgba(31, 38, 135, 0.15),
+                0 2px 8px rgba(0, 0, 0, 0.05),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            color: var(--text-primary);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 20px;
+            z-index: 1500;
+            border-radius: 60px;
+            margin: 0 auto 2.5rem;
+            max-width: 92%;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: visible;
+        }
+
+        /* Gradient border effect */
+        header::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 60px;
+            padding: 2px;
+            background: linear-gradient(135deg,
+                    rgba(99, 102, 241, 0.4),
+                    rgba(168, 85, 247, 0.4),
+                    rgba(236, 72, 153, 0.4));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        header:hover::before {
+            opacity: 1;
+        }
+
+        /* Dark mode header */
+        .dark-mode header {
+            background: linear-gradient(135deg,
+                    rgba(30, 41, 59, 0.95) 0%,
+                    rgba(15, 23, 42, 0.9) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                0 2px 8px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        /* Scroll effect */
+        header.scrolled {
+            transform: translateY(-5px);
+            box-shadow:
+                0 12px 40px rgba(31, 38, 135, 0.2),
+                0 4px 12px rgba(0, 0, 0, 0.08),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            flex-direction: row;
+            /* Force row direction for correct logo/menu placement */
+            width: 100%;
+        }
+
+        header {
+            direction: ltr;
+            /* Force LTR at header level */
+        }
+
+        .header-content>* {
+            direction: rtl;
+            /* Restore RTL for inner elements */
+        }
+
+        /* Fix for RTL Layouts to ensure Logo is on Right/Left correctly */
+        html[dir="rtl"] .header-content {
+            flex-direction: row;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+            position: relative;
+            z-index: 2;
+            color: var(--primary-dark);
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .dark-mode .logo {
+            color: white;
+        }
+
+        .logo img {
+            height: 45px;
+            width: auto;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gradient-1);
+            border-radius: 2px;
+            opacity: 0.8;
+        }
+
+        /* Dropdown Menu */
+        .nav-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Dropdown Menu - Enhanced */
+        .dropdown-toggle {
+            background: linear-gradient(135deg,
+                    rgba(255, 255, 255, 0.15),
+                    rgba(255, 255, 255, 0.05));
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--text-primary);
+            padding: 0.7rem 1.6rem;
+            border-radius: 30px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 1rem;
+            letter-spacing: 0.4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dropdown-toggle::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.2),
+                    transparent);
+            transition: left 0.5s ease;
+        }
+
+        .dropdown-toggle:hover::before {
+            left: 100%;
+        }
+
+        .dark-mode .dropdown-toggle {
+            color: var(--text-primary);
+            background: linear-gradient(135deg,
+                    rgba(255, 255, 255, 0.08),
+                    rgba(255, 255, 255, 0.03));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dropdown-toggle:hover {
+            background: linear-gradient(135deg, var(--primary), #6366f1);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+            border-color: transparent;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 130%;
+            right: 0;
+            background: linear-gradient(135deg,
+                    rgba(255, 255, 255, 0.98),
+                    rgba(255, 255, 255, 0.95));
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 24px;
+            box-shadow:
+                0 12px 40px rgba(31, 38, 135, 0.2),
+                0 4px 12px rgba(0, 0, 0, 0.08);
+            padding: 0.8rem;
+            min-width: 240px;
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px) scale(0.95);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            list-style: none;
+        }
+
+        .dark-mode .dropdown-menu {
+            background: linear-gradient(135deg,
+                    rgba(30, 41, 59, 0.98),
+                    rgba(15, 23, 42, 0.95));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu li {
+            margin: 0;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 0.85rem 1.5rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.25s ease;
+            position: relative;
+        }
+
+        .dark-mode .dropdown-menu a {
+            color: var(--text-secondary);
+        }
+
+        .dropdown-menu a:hover {
+            background: rgba(79, 70, 229, 0.1);
+            color: var(--primary-dark);
+            padding-right: 1.8rem;
+        }
+
+        .dark-mode .dropdown-menu a:hover {
+            color: #c4b5fd;
+            background: rgba(67, 56, 202, 0.2);
+        }
+
+        .dropdown-menu a::before {
+            content: '';
+            position: absolute;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--primary);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .dropdown-menu a:hover::before {
+            opacity: 1;
+        }
+
+        /* Dark Mode Toggle */
+        .theme-toggle {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1.5px solid rgba(255, 255, 255, 0.3);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(8px);
+            position: relative;
+            overflow: hidden;
+            margin-right: 1rem;
+            z-index: 100;
+            /* Ensure button is clickable above decorative elements */
+        }
+
+        .theme-toggle::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent);
+            border-radius: 50%;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(20deg) scale(1.1);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Header Decorative Elements */
+        .header-decor {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .decor-circle {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+        }
+
+        .decor-circle:nth-child(1) {
+            top: -30px;
+            right: -30px;
+            width: 60px;
+            height: 60px;
+        }
+
+        .decor-circle:nth-child(2) {
+            bottom: -25px;
+            left: -25px;
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, rgba(236, 72, 153, 0.1) 0%, transparent 70%);
+        }
+
+        /* Main Content */
+        main {
+            min-height: calc(100vh - 160px);
+            padding: 1.5rem 0 3rem;
+        }
+
+        .page {
+            display: none;
+            animation: fadeInUp 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+
+        .page-header::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--gradient-1);
+            border-radius: 2px;
+            box-shadow: 0 3px 10px rgba(139, 92, 246, 0.25);
+        }
+
+        .page-header h1 {
+            font-size: 2.8rem;
+            color: var(--primary-dark);
+            margin-bottom: 1.2rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 3px 10px rgba(139, 92, 246, 0.15);
+            font-weight: 800;
+        }
+
+        .dark-mode .page-header h1 {
+            color: #c4b5fd;
+        }
+
+        .page-header p {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            font-weight: 500;
+            line-height: 1.7;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-amount));
+            -webkit-backdrop-filter: blur(var(--blur-amount));
+            border-radius: 30px;
+            box-shadow: var(--glass-shadow);
+            margin-bottom: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid var(--glass-border);
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            left: -100px;
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(236, 72, 153, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-title {
+            font-size: 2.4rem;
+            color: var(--primary-dark);
+            margin-bottom: 2rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 3px 10px rgba(139, 92, 246, 0.15);
+            font-weight: 800;
+        }
+
+        .dark-mode .hero-title {
+            color: #c4b5fd;
+        }
+
+        .target-audience {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.8rem;
+            margin: 2.5rem 0;
+        }
+
+        .audience-card {
+            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+            padding: 1.8rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
+            transition: all 0.35s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dark-mode .audience-card {
+            background: linear-gradient(135deg, #334155, #1e293b);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .audience-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-1);
+        }
+
+        .audience-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.18);
+            border-color: var(--primary);
+        }
+
+        .dark-mode .audience-card:hover {
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .audience-icon {
+            font-size: 2.8rem;
+            margin-bottom: 1.4rem;
+            color: var(--primary);
+            transition: transform 0.3s ease;
+        }
+
+        .audience-card:hover .audience-icon {
+            transform: scale(1.15) rotate(8deg);
+        }
+
+        .audience-title {
+            font-size: 1.4rem;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .dark-mode .audience-title {
+            color: #c4b5fd;
+        }
+
+        .audience-desc {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        .special-note {
+            background: linear-gradient(135deg, #fffbeb, #fef3c7);
+            padding: 2.2rem;
+            border-radius: 20px;
+            margin-top: 2.5rem;
+            border-left: 5px solid var(--warning);
+            position: relative;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(245, 158, 11, 0.18);
+        }
+
+        .dark-mode .special-note {
+            background: linear-gradient(135deg, #37302c, #43382a);
+            border-left: 5px solid #d97706;
+            box-shadow: 0 8px 20px rgba(217, 119, 6, 0.25);
+        }
+
+        .special-note::before {
+            content: '✨';
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2.4rem;
+            background: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.18);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+
+            50% {
+                transform: translateX(-50%) translateY(-8px);
+            }
+        }
+
+        .dark-mode .special-note::before {
+            background: #1e293b;
+            color: #fde047;
+        }
+
+        .special-note h3 {
+            color: #92400e;
+            margin-bottom: 1.4rem;
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .dark-mode .special-note h3 {
+            color: #fde047;
+        }
+
+        .special-note p {
+            color: #92400e;
+            font-size: 1.25rem;
+            font-weight: 700;
+            line-height: 1.8;
+        }
+
+        .dark-mode .special-note p {
+            color: #fde047;
+        }
+
+        /* Years Grid */
+        .years-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.2rem;
+            margin-top: 2rem;
+        }
+
+        .year-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-amount));
+            -webkit-backdrop-filter: blur(var(--blur-amount));
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: var(--glass-shadow);
+            transition: all 0.35s ease;
+            position: relative;
+            cursor: pointer;
+            border: 1px solid var(--glass-border);
+        }
+
+        .dark-mode .year-card {
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(67, 56, 202, 0.25);
+        }
+
+        .year-card:hover {
+            transform: translateY(-12px) rotateX(4deg);
+            box-shadow: 0 28px 55px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .dark-mode .year-card:hover {
+            box-shadow: 0 28px 55px -12px rgba(0, 0, 0, 0.45);
+        }
+
+        .year-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--accent-1), var(--accent-2), var(--accent-3), var(--accent-4), var(--accent-5), var(--accent-6), var(--accent-7));
+            background-size: 500% 500%;
+            animation: gradientShift 4s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .year-header {
+            padding: 2rem;
+            text-align: center;
+            background: var(--header-bg);
+            color: white;
+            position: relative;
+        }
+
+        .year-number {
+            font-size: 3.8rem;
+            font-weight: 900;
+            margin-bottom: 0.6rem;
+            animation: float 3s ease-in-out infinite;
+            text-shadow: 0 5px 12px rgba(0, 0, 0, 0.35);
+            letter-spacing: -1.5px;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-12px);
+            }
+        }
+
+        .year-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+        }
+
+        .subjects-list {
+            list-style: none;
+            margin: 1.8rem 0;
+            padding: 0 2rem;
+        }
+
+        .subjects-list li {
+            padding: 0.9rem 0;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.25s ease;
+            cursor: pointer;
+            border-radius: 10px;
+            margin: 0.3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dark-mode .subjects-list li {
+            border-bottom: 1px solid #334155;
+        }
+
+        .subjects-list li:last-child {
+            border-bottom: none;
+        }
+
+        .subjects-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: var(--gradient-1);
+            transform: scaleY(0);
+            transform-origin: top;
+            transition: transform 0.25s ease;
+        }
+
+        .subjects-list li:hover::before {
+            transform: scaleY(1);
+        }
+
+        .subjects-list li:hover {
+            color: var(--primary-dark);
+            transform: translateX(8px);
+            background: #f8fafc;
+            padding-left: 1.2rem;
+            box-shadow: 0 3px 10px rgba(79, 70, 229, 0.12);
+        }
+
+        .dark-mode .subjects-list li:hover {
+            color: #c4b5fd;
+            background: #334155;
+            box-shadow: 0 3px 10px rgba(67, 56, 202, 0.25);
+        }
+
+        .subject-icon {
+            font-size: 1.3rem;
+            color: var(--primary);
+            min-width: 25px;
+            text-align: center;
+        }
+
+        /* Subject Detail Section */
+        .subject-detail-section {
+            display: none;
+            margin-top: 2.5rem;
+            padding: 2.2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-amount));
+            -webkit-backdrop-filter: blur(var(--blur-amount));
+            border-radius: 30px;
+            box-shadow: var(--glass-shadow);
+            animation: slideInUp 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+        }
+
+        .dark-mode .subject-detail-section {
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(67, 56, 202, 0.25);
+        }
+
+        .subject-detail-section.active {
+            display: block;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .subject-header {
+            text-align: center;
+            margin-bottom: 2.2rem;
+            padding-bottom: 1.6rem;
+            border-bottom: 3px solid #e2e8f0;
+            position: relative;
+        }
+
+        .dark-mode .subject-header {
+            border-bottom: 3px solid #334155;
+        }
+
+        /* ====== Horizontal Subject Card ====== */
+        .subject {
+            background: linear-gradient(135deg, #ffffff, #f3f6fb);
+            border-radius: 20px;
+            padding: 18px 22px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .subject::before {
+            content: "";
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 6px;
+            height: 100%;
+            background: linear-gradient(180deg, #4facfe, #00f2fe);
+        }
+
+        .subject:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        /* ====== Title ====== */
+        .subject h2 {
+            font-size: 20px;
+            color: #1e3c72;
+            min-width: 140px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        /* ====== Lessons Container ====== */
+        .subject-lessons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 16px;
+            flex: 1;
+        }
+
+        /* ====== Lesson Item ====== */
+        .lesson {
+            background: #f9fbff;
+            padding: 6px 12px;
+            border-radius: 20px;
+            transition: all 0.2s ease;
+        }
+
+        .lesson:hover {
+            background: #eef4ff;
+            transform: scale(1.05);
+        }
+
+        .lesson label {
+            cursor: pointer;
+            font-size: 14px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Checkbox */
+        .lesson input[type="checkbox"] {
+            accent-color: #4facfe;
+            cursor: pointer;
+        }
+
+        /* ====== Progress Area ====== */
+        .progress-area {
+            min-width: 160px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 6px;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 10px;
+            background: #e6ecf5;
+            border-radius: 50px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #4facfe, #00f2fe, #43e97b);
+            border-radius: 50px;
+            transition: width 0.4s ease;
+        }
+
+        .progress-text {
+            font-size: 13px;
+            font-weight: bold;
+            color: #1e3c72;
+        }
+
+        /* ====== Completed Lesson ====== */
+        .lesson input[type="checkbox"]:checked+span {
+            text-decoration: line-through;
+            color: #999;
+        }
+
+        /* ====== Responsive ====== */
+        @media (max-width: 768px) {
+            .subject {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .progress-area {
+                width: 100%;
+            }
+        }
+
+        .subject-header::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 3px;
+            background: var(--gradient-1);
+            border-radius: 2px;
+        }
+
+        .subject-header h2 {
+            font-size: 2.6rem;
+            color: var(--primary-dark);
+            margin-bottom: 1.2rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 3px 10px rgba(139, 92, 246, 0.15);
+            font-weight: 800;
+        }
+
+        .dark-mode .subject-header h2 {
+            color: #c4b5fd;
+        }
+
+        .subject-overview {
+            background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
+            padding: 2rem;
+            border-radius: 20px;
+            margin-bottom: 2.5rem;
+            border-left: 5px solid var(--primary);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 6px 16px rgba(79, 70, 229, 0.08);
+        }
+
+        .subject-overview::before {
+            content: '""';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(79, 70, 229, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .subject-overview h3 {
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+        }
+
+        .dark-mode .subject-overview h3 {
+            color: #c4b5fd;
+        }
+
+        .subject-overview h3::before {
+            content: '📖';
+            font-size: 1.8rem;
+        }
+
+        .subject-overview p {
+            color: var(--text-secondary);
+            line-height: 1.9;
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 2.2rem;
+            margin-top: 2rem;
+        }
+
+        .content-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-amount));
+            -webkit-backdrop-filter: blur(var(--blur-amount));
+            border-radius: 24px;
+            padding: 2.4rem 1.8rem;
+            box-shadow: var(--glass-shadow);
+            transition: all 0.35s ease;
+            border-top: 5px solid var(--primary);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+        }
+
+        .dark-mode .content-card {
+            box-shadow: 0 15px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(67, 56, 202, 0.25);
+        }
+
+        .content-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gradient-1);
+        }
+
+        .content-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.2);
+        }
+
+        .dark-mode .content-card:hover {
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4);
+        }
+
+        .content-card h4 {
+            color: var(--primary-dark);
+            margin-bottom: 1.4rem;
+            font-size: 1.6rem;
+            text-align: center;
+            position: relative;
+            padding-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .dark-mode .content-card h4 {
+            color: #c4b5fd;
+        }
+
+        .content-card h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--gradient-1);
+            border-radius: 2px;
+        }
+
+        .content-card ul {
+            list-style: none;
+        }
+
+        .content-card li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #f1f5f9;
+            color: var(--text-secondary);
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+        }
+
+        .dark-mode .content-card li {
+            border-bottom: 1px solid #334155;
+        }
+
+        .content-card li:last-child {
+            border-bottom: none;
+        }
+
+        .content-card li::before {
+            content: '✓';
+            color: var(--success);
+            font-weight: bold;
+            font-size: 1.2rem;
+            min-width: 22px;
+        }
+
+        .content-card li:hover {
+            color: var(--primary-dark);
+            transform: translateX(6px);
+        }
+
+        .dark-mode .content-card li:hover {
+            color: #c4b5fd;
+        }
+
+        /* Lessons Card Specific Styling */
+        .lesson-item {
+            background: #f8fafc;
+            padding: 1.2rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            border-left: 3px solid var(--primary);
+            transition: all 0.25s ease;
+            box-shadow: 0 3px 10px rgba(79, 70, 229, 0.06);
+        }
+
+        .dark-mode .lesson-item {
+            background: #334155;
+            box-shadow: 0 3px 10px rgba(67, 56, 202, 0.18);
+        }
+
+        .lesson-item:hover {
+            background: #f1f5f9;
+            transform: translateX(4px);
+            box-shadow: 0 5px 14px rgba(0, 0, 0, 0.12);
+        }
+
+        .dark-mode .lesson-item:hover {
+            background: #475569;
+            box-shadow: 0 5px 14px rgba(0, 0, 0, 0.25);
+        }
+
+        .lesson-title {
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 0.6rem;
+            font-size: 1.1rem;
+        }
+
+        .dark-mode .lesson-title {
+            color: #c4b5fd;
+        }
+
+        .lesson-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .lesson-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            padding: 0.4rem 0.8rem;
+            border-radius: 10px;
+            background: rgba(79, 70, 229, 0.1);
+        }
+
+        .lesson-link:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+            background: rgba(79, 70, 229, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .dark-mode .lesson-link:hover {
+            color: #c4b5fd;
+        }
+
+        .difficulty {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 0.35rem 0.8rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        }
+
+        .difficulty.easy {
+            background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+            color: #166534;
+        }
+
+        .dark-mode .difficulty.easy {
+            background: linear-gradient(135deg, #166534, #15803d);
+            color: #bbf7d0;
+        }
+
+        .difficulty.medium {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            color: #92400e;
+        }
+
+        .dark-mode .difficulty.medium {
+            background: linear-gradient(135deg, #92400e, #b45309);
+            color: #fde68a;
+        }
+
+        .difficulty.hard {
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+            color: #991b1b;
+        }
+
+        .dark-mode .difficulty.hard {
+            background: linear-gradient(135deg, #991b1b, #dc2626);
+            color: #fecaca;
+        }
+
+        /* Videos Card Specific Styling */
+        .video-item {
+            background: #f0f9ff;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 0.8rem;
+            border-left: 3px solid var(--accent-5);
+            transition: all 0.25s ease;
+            box-shadow: 0 3px 10px rgba(6, 182, 212, 0.08);
+        }
+
+        .dark-mode .video-item {
+            background: #334155;
+            box-shadow: 0 3px 10px rgba(8, 145, 178, 0.2);
+        }
+
+        .video-item:hover {
+            background: #e0f2fe;
+            transform: translateX(2px);
+            box-shadow: 0 5px 14px rgba(0, 0, 0, 0.15);
+        }
+
+        .dark-mode .video-item:hover {
+            background: #475569;
+            box-shadow: 0 5px 14px rgba(0, 0, 0, 0.3);
+        }
+
+        .video-link {
+            color: var(--accent-5);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            padding: 0.4rem 0.8rem;
+            border-radius: 10px;
+            background: rgba(6, 182, 212, 0.1);
+        }
+
+        .video-link:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+            background: rgba(6, 182, 212, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .dark-mode .video-link:hover {
+            color: #c4b5fd;
+        }
+
+        /* Semester Toggle Buttons */
+        .semester-toggle {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.6rem;
+            flex-wrap: wrap;
+        }
+
+        .semester-btn {
+            background: var(--glass-bg);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 0.7rem 1.6rem;
+            border-radius: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+            font-size: 1rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .semester-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 6px 16px rgba(79, 70, 229, 0.25);
+        }
+
+        .semester-btn.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 6px 16px rgba(79, 70, 229, 0.25);
+        }
+
+        .semester-content {
+            display: none;
+        }
+
+        .semester-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .empty-content {
+            text-align: center;
+            color: var(--danger);
+            font-weight: 700;
+            padding: 2.2rem 1rem;
+            font-size: 1.25rem;
+            background: linear-gradient(135deg, #fef2f2, #fee2e2);
+            border-radius: 16px;
+            border: 2.5px dashed var(--danger);
+            animation: pulseRed 2s infinite;
+            box-shadow: 0 6px 16px rgba(239, 68, 68, 0.18);
+        }
+
+        .dark-mode .empty-content {
+            background: linear-gradient(135deg, #7f1d1d, #991b1b);
+            color: #fecaca;
+            border: 2.5px dashed #fecaca;
+            box-shadow: 0 6px 16px rgba(153, 27, 27, 0.35);
+        }
+
+        @keyframes pulseRed {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.03);
+            }
+        }
+
+        .empty-content::before {
+            content: '⚠️';
+            font-size: 2.2rem;
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+
+        /* Footer - Smaller & More Attractive */
+        footer {
+            background: linear-gradient(120deg, #1e293b, #0f172a, #1e293b);
+            color: white;
+            padding: 2rem 0 1.5rem;
+            text-align: center;
+            margin-top: 2.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top right, rgba(139, 92, 246, 0.15), transparent 30%),
+                radial-gradient(circle at bottom left, rgba(236, 72, 153, 0.15), transparent 30%);
+            z-index: 0;
+        }
+
+        .footer-content {
+            max-width: 650px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-content p {
+            margin-bottom: 1rem;
+            opacity: 0.85;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        .copyright {
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            opacity: 0.9;
+        }
+
+        /* Study Map Custom Styles */
+        .study-map-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .study-tip-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dark-mode .study-tip-card {
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .study-tip-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .dark-mode .study-tip-card:hover {
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .study-tip-card h3 {
+            color: var(--primary-dark);
+            margin-bottom: 1.2rem;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .dark-mode .study-tip-card h3 {
+            color: #c4b5fd;
+        }
+
+        .study-tip-card h3::before {
+            font-size: 1.6rem;
+        }
+
+        .study-tip-card p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1.2rem;
+        }
+
+        .study-tip-card ul {
+            padding-right: 1.2rem;
+        }
+
+        .study-tip-card li {
+            margin-bottom: 0.6rem;
+            color: var(--text-secondary);
+            position: relative;
+            padding-right: 1.2rem;
+        }
+
+        .study-tip-card li::before {
+            content: '•';
+            color: var(--primary);
+            position: absolute;
+            right: 0;
+            font-weight: bold;
+            font-size: 1.4rem;
+        }
+
+        .resources-section {
+            margin-top: 3rem;
+        }
+
+        .resources-section h2 {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            color: var(--primary-dark);
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+        }
+
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.8rem;
+            margin-top: 1.5rem;
+        }
+
+        .resource-card {
+            background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
+            border-radius: 18px;
+            padding: 1.8rem;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.12);
+            transition: all 0.3s ease;
+        }
+
+        .dark-mode .resource-card {
+            background: linear-gradient(135deg, #1e293b, #334155);
+            box-shadow: 0 8px 20px rgba(67, 56, 202, 0.25);
+        }
+
+        .resource-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 12px 28px rgba(79, 70, 229, 0.2);
+        }
+
+        .resource-icon {
+            font-size: 2.4rem;
+            margin-bottom: 1.2rem;
+            color: var(--primary);
+        }
+
+        .resource-card h4 {
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .dark-mode .resource-card h4 {
+            color: #c4b5fd;
+        }
+
+        .resource-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* About Us Page Specific */
+        .about-section {
+            margin-top: 2.5rem;
+        }
+
+        .about-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dark-mode .about-card {
+            background: #1e293b;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .about-card h2 {
+            color: var(--primary-dark);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .dark-mode .about-card h2 {
+            color: #c4b5fd;
+        }
+
+        .about-card h2::before {
+            font-size: 1.8rem;
+        }
+
+        .about-card p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .about-card ul {
+            padding-right: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .about-card li {
+            margin-bottom: 0.8rem;
+            color: var(--text-secondary);
+            position: relative;
+            padding-right: 1.5rem;
+        }
+
+        .about-card li::before {
+            content: '✓';
+            color: var(--primary);
+            position: absolute;
+            right: 0;
+            font-weight: bold;
+            font-size: 1.4rem;
+        }
+
+        .not-for {
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+            padding: 1.5rem;
+            border-radius: 16px;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--danger);
+        }
+
+        .dark-mode .not-for {
+            background: linear-gradient(135deg, #7f1d1d, #991b1b);
+            color: #fecaca;
+            border-left: 4px solid #fecaca;
+        }
+
+        .not-for h3 {
+            color: var(--danger);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .dark-mode .not-for h3 {
+            color: #fecaca;
+        }
+
+        .not-for h3::before {
+            content: '❌';
+            font-size: 1.6rem;
+        }
+
+        .transparency-card {
+            background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+            border-left: 4px solid var(--accent-5);
+        }
+
+        .dark-mode .transparency-card {
+            background: linear-gradient(135deg, #0c4a6e, #0ea5e9);
+            color: #f0f9ff;
+        }
+
+        .transparency-card h2::before {
+            content: '⚠️';
+        }
+
+        .human-touch {
+            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+            border-left: 4px solid var(--success);
+            text-align: center;
+            padding: 2rem;
+            border-radius: 20px;
+        }
+
+        .dark-mode .human-touch {
+            background: linear-gradient(135deg, #166534, #15803d);
+            color: #dcfce7;
+        }
+
+        .human-touch p {
+            font-style: italic;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .interaction-section {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2.5rem;
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.1);
+            border: 1px solid rgba(79, 70, 229, 0.1);
+        }
+
+        .interaction-section h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.2rem;
+            color: var(--primary-dark);
+        }
+
+        .interaction-section p {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 1.8rem;
+            line-height: 1.7;
+        }
+
+        .interaction-btn {
+            background: var(--gradient-1);
+            color: white;
+            padding: 0.9rem 2.4rem;
+            border-radius: 16px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.2rem;
+            transition: all 0.35s ease;
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.35);
+            display: inline-block;
+        }
+
+        .interaction-btn:hover {
+            transform: translateY(-4px) scale(1.04);
+            box-shadow: 0 10px 28px rgba(139, 92, 246, 0.5);
+            background: var(--gradient-2);
+        }
+
+        .contact-info {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-top: 2rem;
+            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.1);
+            border: 1px solid rgba(79, 70, 229, 0.1);
+            text-align: center;
+        }
+
+        .contact-info h3 {
+            color: var(--primary-dark);
+            margin-bottom: 1.5rem;
+            font-size: 1.6rem;
+        }
+
+        .contact-info p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .contact-email {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+
+        .contact-email:hover {
+            text-decoration: underline;
+        }
+
+        /* Welcome Modal */
+        #welcomeModal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 500px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(79, 70, 229, 0.2);
+        }
+
+        .modal-content h2 {
+            font-size: 2.2rem;
+            color: var(--primary-dark);
+            margin-bottom: 1.2rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+        }
+
+        .modal-content p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .close-btn {
+            background: var(--gradient-1);
+            color: white;
+            padding: 0.7rem 1.8rem;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        .close-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Responsive Design - Professional Refinements */
+        @media (max-width: 992px) {
+
+            .target-audience,
+            .years-grid,
+            .study-map-section {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .page-header h1 {
+                font-size: 2.3rem;
+            }
+
+            .year-number {
+                font-size: 3.3rem;
+            }
+
+            .subject-header h2 {
+                font-size: 2.1rem;
+            }
+
+            .header-content {
+                padding: 0.5rem 1rem;
+                gap: 0.8rem;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .logo img {
+                height: 35px;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .content-card {
+                padding: 1.8rem 1.2rem;
+            }
+
+            .search-container {
+                width: 95%;
+                padding: 1.2rem;
+                margin-top: 5vh;
+            }
+
+            #search-input {
+                padding: 1rem;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 580px) {
+            .header-content {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 12px;
+            }
+
+            .logo {
+                order: -1;
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 5px;
+            }
+
+            header {
+                top: 10px;
+                border-radius: 30px;
+                padding: 0.8rem 1rem;
+            }
+
+            .dropdown-toggle {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+
+            .theme-toggle {
+                width: 36px;
+                height: 36px;
+            }
+
+            .years-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .search-overlay {
+                padding-top: 5vh;
+            }
+
+            .search-result-item {
+                padding: 1rem;
+                gap: 10px;
+            }
+
+            .search-result-icon {
+                width: 35px;
+                height: 35px;
+                font-size: 1.2rem;
+            }
+
+            .search-result-title {
+                font-size: 1rem;
+            }
+
+            .search-result-desc {
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 1.7rem;
+            }
+
+            .page-header h1 {
+                font-size: 1.9rem;
+            }
+
+            .page-header p {
+                font-size: 1rem;
+            }
+
+            .audience-card,
+            .about-card,
+            .study-tip-card {
+                padding: 1.5rem 1.2rem;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .interaction-section,
+            .contact-info {
+                padding: 1.8rem 1.2rem;
+            }
+
+            /* Compact Header for tiny screens */
+            .header-content {
+                gap: 8px;
+            }
+
+            .dropdown-toggle span {
+                display: none;
+            }
+
+            /* Optional: Hide text in menu btn if needed */
+
+            .modal-content {
+                padding: 1.8rem 1.2rem;
+                margin: 15px;
+            }
+
+            .modal-content h2 {
+                font-size: 1.6rem;
+            }
+
+            .empty-page {
+                padding: 3rem 1.5rem;
+            }
+
+            .empty-page h2 {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Scroll Animation Classes */
+        .hidden-el {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        .show-el {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Welcome Modal -->
+    <div id="welcomeModal">
+        <div class="modal-content">
+            <h2>Welcome To My Site 😎</h2>
+            <p>مرحباً بك في منصة MedGpa</p>
+            <button class="close-btn" onclick="document.getElementById('welcomeModal').style.display='none'">ابدأ
+                الاستكشاف</button>
+        </div>
+    </div>
+
+    <header id="mainHeader">
+        <div class="container header-content">
+            <div style="display: flex; align-items: center;">
+                <div class="nav-dropdown"><button class="dropdown-toggle">القائمة ▼ </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" onclick="showPage('home')">الرئيسية</a></li>
+                        <li><a href="#" onclick="showPage('years')">السنوات الدراسية</a></li>
+                        <li><a href="#" onclick="showPage('study_map')">خريطتك الدراسية</a></li>
+                        <li><a href="#" onclick="showPage('mental_health')">صحتك النفسية</a></li>
+                        <li><a href="#" onclick="showPage('qcm')">QCMs</a></li>
+                        <li><a href="#" onclick="showPage('about_us')">من نحن</a></li>
+                    </ul>
+                </div>
+                <button class="theme-toggle" id="themeToggle">🌙</button>
+                <div class="header-decor">
+                    <div class="decor-circle"></div>
+                    <div class="decor-circle"></div>
+                </div>
+            </div>
+            <div class="logo"><span>MedGpa</span></div>
+        </div>
+    </header>
+    <main class="container">
+
+        <section id="home" class="page active">
+            <div class="page-header">
+                <h1>مرحباً بك في MedGpa</h1>
+                <p>منصة تعليمية شاملة تهدف إلى تسهيل دراسة المواد الطبية الأساسية من خلال محتوى منظم
+                    وسهل الفهم</p>
+            </div>
+            <div class="hero-section">
+                <h2 class="hero-title">يستهدف الموقع</h2>
+                <div class="target-audience">
+                    <div class="audience-card">
+                        <div class="audience-icon">👨⚕️</div>
+                        <h3 class="audience-title">طلاب الطب</h3>
+                        <p class="audience-desc">(خصوصًا السنوات الأولى)</p>
+                    </div>
+                    <div class="audience-card">
+                        <div class="audience-icon">📚</div>
+                        <h3 class="audience-title">من يعانون من كثرة المصادر</h3>
+                        <p class="audience-desc">ولا يعرفون من أين يبدأون</p>
+                    </div>
+                    <div class="audience-card">
+                        <div class="audience-icon">⁉️</div>
+                        <h3 class="audience-title">من يبحثون عن الاسئلة</h3>
+                        <p class="audience-desc">ولم يجدوا من اين</p>
+                    </div>                  
+                    <div class="audience-card">
+                        <div class="audience-icon">📉</div>
+                        <h3 class="audience-title">من يدرسون كثيرًا</h3>
+                        <p class="audience-desc">لكن نتائجهم ضعيفة</p>
+                    </div>
+                    <div class="audience-card">
+                        <div class="audience-icon">😴</div>
+                        <h3 class="audience-title">من يشعرون بالإرهاق أو الضياع</h3>
+                        <p class="audience-desc">في رحلتهم الأكاديمية</p>
+                    </div>
+                </div>
+                <div class="special-note">
+                    <h3>ملاحظة خاصة</h3>
+                    <p>✨ مكتوب بلغة طالب طب </p>
+                </div>
+                <div style="margin-top: 2.5rem;"><button class="btn" onclick="showPage('years')"
+                        style="font-size: 1.2rem; padding: 1rem 2.4rem;">ابدأ رحلتك الآن</button></div>
+            </div>
+        </section>
+
+        <section id="years" class="page">
+            <div class="page-header">
+                <h1>السنوات الدراسية</h1>
+                <p>دليل شامل للسنتين الأولى والثانية في كلية الطب مع المواد الأساسية والمواضيع
+                    الرئيسية</p>
+            </div>
+            <div class="years-grid">
+
+                <div class="year-card">
+                    <div class="year-header">
+                        <div class="year-number">1</div>
+                        <div class="year-title">السنة الأولى</div>
+                    </div>
+                    <div class="year-body">
+                        <h3
+                            style="color: var(--primary-dark); margin-bottom: 1.8rem; text-align: center; font-size: 1.4rem;">
+                            المواد الأساسية</h3>
+                        <ul class="subjects-list">
+                            <li
+                                onclick="showSubjectDetail('anatomie', 'ANATOMIE', 'هاته المادة هي اساس الطب وتعتبر من احلى المواد واسهلها ان احببتها. صحيح انا كثيفة المعلومات لكنها تحسسك بانك تدرس في مجال الطب. حيث ستدرسون فيها اساسيات الجسم : العظام,العضلات,الاوعية الدموية,الاعصاب,المفاصل . وهاته الاساسيات مقسمة الى طرفين العلوي والسفلي .', {'semester1': [{'title': 'Introduction Anatomique', 'link': 'https://docs.google.com/presentation/d/1rKUV7_jZiNRmHKDwjBlLyC4AF66tF5tb/edit?usp=drive_link&ouid=106233026404999643178&rtpof=true&sd=true', 'difficulty': 'easy'}, {'title': 'Osteologie de MS', 'link': 'https://docs.google.com/presentation/d/1KxxkQfGv7vcCcgK4My8_s-YKX_vv1gFl/edit?usp=drive_link&ouid=106233026404999643178&rtpof=true&sd=true', 'difficulty': 'medium'}, {'title': 'Arthrologie de MS', 'link': 'https://drive.google.com/file/d/1WQZgfFKXFMhtkcaBeir-dM3lttPM6zyH/view?usp=drive_link', 'difficulty': 'medium'}, {'title': 'Myologie de MS', 'link': 'https://drive.google.com/file/d/1jgclrvG1cCyjXwczyWA5ywZCbd0LZEkY/view?usp=drive_link', 'difficulty': 'hard'}, {'title': 'Angiologie de MS', 'link': 'https://drive.google.com/file/d/1IfRBXY3Uyjtc28LGQB9l4ol6Gddc7y95/view?usp=drive_link', 'difficulty': 'medium'}, {'title': 'Neurologie de MS', 'link': 'https://drive.google.com/file/d/1SypSOfHi8hEc2RGyv8c8s2A62N6bx-j2/view?usp=drive_link', 'difficulty': 'hard'}], 'semester2': [{'title': 'Osteologie de MP', 'link': 'https://docs.google.com/presentation/d/1KxxkQfGv7vcCcgK4My8_s-YKX_vv1gFl/edit?usp=drive_link&ouid=106233026404999643178&rtpof=true&sd=true', 'difficulty': 'medium'}, {'title': 'Arthrologie de MP', 'link': 'https://drive.google.com/file/d/1XnJ4UH81cCwmF3v6pflO6ONb8Gvqd9vc/view?usp=drive_link', 'difficulty': 'medium'}, {'title': 'Myologie de MS', 'link': 'https://docs.google.com/presentation/d/1L9-vIIs-xVyKBHoTFC83K570T6tLsouv/edit?usp=drive_link&ouid=106233026404999643178&rtpof=true&sd=true', 'difficulty': 'hard'}, {'title': 'Angiologie de MS', 'link': 'https://drive.google.com/file/d/1IHv3zJ9VG3Wt9RROnElogj6r2O2HjOn_/view?usp=drive_link', 'difficulty': 'medium'}, {'title': 'Neurologie de MS', 'link': 'https://drive.google.com/file/d/1TMvG0TaTqetZFXx_w3lT2A0emqhy8vkq/view?usp=drive_link', 'difficulty': 'medium'}]}, null, ['الرسومات تساعدك كثيرا', 'استخدم تطبيق الاطلس ثلاثي الابعاد', 'حاول ان تتخيل ما تدرسه', 'ابدا بدراستها قبل بقية المواد'], ['أساس جميع التخصصات الطبية', 'ضروري للفهم السريري', 'يساعد في التشخيص الدقيق', 'مهم للإجراءات  الجراحية'])">
+                                <span class="subject-icon">🦴</span>ANATOMIE
+                            </li>
+                            <li
+                                onclick="showSubjectDetail('biochimie', 'BIOCHIMIE', 'هاته المادة سهلة وممتعة قليلا تدرسون فيها 3 مركبات : السكريات,البروتينات والليبيدات حيث يتضمن كل مركب بنيتة الجزئية وعملية الايض الخاصة به.', {'semester1': [{'title': 'Les Structures', 'link': 'https://drive.google.com/drive/folders/1C4Y5CKvhk0e6JRieW6tpLdlM_UCepgnE?usp=drive_link', 'difficulty': 'medium'}], 'semester2': [{'title': 'Les Metabolismes', 'link': 'https://drive.google.com/drive/folders/1_iemCqiWvlBICk4qmx7xun4avsu88-We?usp=drive_link', 'difficulty': 'hard'}]}, {'semester1': [{'title': 'Les Glucides', 'link': 'https://youtube.com/playlist?list=PLCkSZi2UeeazSlRMM-ZOMRh96D1w9CPln&si=uOKU14DfjlbWeA9z'}, {'title': 'Les Lipides', 'link': 'https://youtube.com/playlist?list=PLCkSZi2UeeaxwmnFn3hjIfyLTMx_acYqo&si=QCRumIWbyqpKETNC'}, {'title': 'Les Proteines', 'link': 'https://youtube.com/playlist?list=PLCkSZi2UeeayYbxsZKTTfpqfcul7wyl7c&si=jxMM7SluCjpPVFA0'}], 'semester2': []}, ['لا تخف هاته المادة تصبح سهلة وممتعة وطبية لابعد درجة في السنة الثانية', 'استخدم المخططات التوضيحية', 'اعتمد الفهم قبل الحفظ خصوصا الفصل الثاني', 'لا تتجاهلو الانزيمات في الفصل الثاني لانها اهم شيئ'], ['فهم أساس الأمراض الوراثية', 'تفسير اختبارات الدم', 'فهم آليات الأدوية', 'أساس الطب الجزيئي'])">
+                                <span class="subject-icon">🧪</span>BIOCHIMIE
+                            </li>
+                            <li
+                                onclick="showSubjectDetail('cytologie', 'CYTOLOGIE', 'المادة الجميلة الرائعة التي تذهب بك الى داخل الخلية ,مادة سهلة ليست معقدة ومهمة جدا كاهمية الاناتومي.', {'semester1': [{'title': 'Organisation cellulaire', 'link': 'https://drive.google.com/file/d/1DKrk6yxoY_Ei94WTF8p0-Nf_tUUrm_j8/view?usp=drive_link', 'difficulty': 'easy'}, {'title': 'Les Methodes', 'link': 'https://drive.google.com/file/d/1tXo1PdSlrcX9UoB4FLEeJ4-NRVjePzhp/view?usp=drive_link', 'difficulty': 'medium'}, {'title': 'Transports', 'link': 'https://drive.google.com/file/d/1O5ySEupqa47QQDFn_6mKkqSeveOcZNRV/view?usp=drive_link', 'difficulty': 'easy'}, {'title': 'Membeane Plasmique', 'link': 'https://drive.google.com/file/d/1IRnz_FMpT3xapUnhhI8Bf-Vj2S16Kwi7/view?usp=drive_link', 'difficulty': 'easy'}], 'semester2': [{'title': 'cytosquelette', 'link': 'https://docs.google.com/presentation/d/1lZn6fJKvW64Kg1t7UHydxekE16yDrnAL/edit?usp=drive_link&ouid=106233026404999643178&rtpof=true&sd=true', 'difficulty': 'easy'}, {'title': 'Endomembranaire', 'link': 'https://docs.google.com/presentation/d/147GRcFACTKX1VeWVwE05ml2i1bsGuFcy/edit?usp=drive_link&ouid=106233026404999643178&rtpof=true&sd=true', 'difficulty': 'easy'}, {'title': 'Hyaloplasme', 'link': 'https://drive.google.com/file/d/1KHbWTUQJa1v4U5ulOCnR7-JYVE4n_27d/view?usp=drive_link', 'difficulty': 'easy'}, {'title': 'Les Organites', 'link': 'https://drive.google.com/drive/folders/1QdfDftHr8iKINuNJMIN2Av3PNczsY2ji?usp=drive_link', 'difficulty': 'hard'}]}, {'semester1': [{'title': 'Cours', 'link': 'https://youtube.com/playlist?list=PLgt70N0N-2-1oV2jgobbWVNrYbwpA7zE6&si=XURisgLAR-5f4aKK'}], 'semester2': [{'title': 'Cytosquelette et Hyaloplasm', 'link': 'https://youtu.be/6ZYjQBK68Bw?si=u13BkB0OqJE1d0X6'}, {'title': 'Endoo', 'link': 'https://youtu.be/T-PeJ29z1z0?si=aNzvh_bBz_U1ipLy'}]}, ['الفصل الاول اسهل قليلا من الثاني فركز جبدا فيها', 'انصحك بالحل بعد الانتهاء من الدرس', 'كررها اكثر من مرتين لانها سهلة النسيان', 'كرر الرسوم التوضيحية'], ['فهم التغيرات المرضية', 'أساس علم الأمراض', 'تفسير النتائج المخبرية', 'فهم الاستجابات المناعية'])">
+                                <span class="subject-icon">🔬</span>CYTOLOGIE
+                            </li>
+                            <li
+                                onclick="showSubjectDetail('physiologie', 'PHYSIOLOGIE', 'هنا الاساس الثاني وهو علم الوظائف حيث انها مدخل فقط والباقي ياتي مرورا بالسنوات تدرسون فيها الاساسيات', {'semester2': [{'title': 'Cours', 'link': 'https://drive.google.com/drive/folders/1_ZVvnJhRvjFB4byK4tLwxRF_XLcbDzvB?usp=drive_link', 'difficulty': 'hard'}]}, {'semester2': [{'title': 'Playliste', 'link': 'https://youtube.com/playlist?list=PLK4UNCL4RZYqTW-Yu4xCL9T8_W-rrN8V8&si=cr6j0x0WIHNNjrxt'}]}, ['مهمة كثيرا في السنة الثانية', 'اعتمد على اليوتيوب 50 بالمئة', 'تحتاج الفهم قبل الحفظ', 'حل الكثير من الأسئلة التطبيقية'], ['فهم الأساس الفسيولوجي للأمراض', 'تفسير نتائج التحاليل', 'فهم آليات عمل الأدوية', 'الأساس للطب السريري'])">
+                                <span class="subject-icon">❤️</span>PHYSIOLOGIE
+                            </li>
+                            <li
+                                onclick="showSubjectDetail('biophysique', 'BIOPHYSIQUE', 'اسمط مادة في الطب تدرس اشياء لا حول ولا قوة الا بالله لكن الفصل الثاني سهل جدا وتدرسون على شيئ طبي الا وهو العين .', {'semester1': [{'title': 'Elctrooo', 'link': 'https://drive.google.com/drive/folders/1CACmLUtv2k1SAW9BSnuuhQ0Vvqa3UUNl?usp=drive_link', 'difficulty': 'hard'}], 'semester2': [{'title': 'Les Yeux', 'link': 'https://drive.google.com/drive/folders/1_qRmAeoEG0IojG7Xe8X8DcLgx76NOkds?usp=drive_link', 'difficulty': 'easy'}]}, {'semester1': [{'title': 'Elctroo', 'link': 'https://youtube.com/playlist?list=PLvhLrq3xUh-fI7g1pEU8ojMAdH6rDUJh6&si=HjnCPMtVQpH0LtN4'}, {'title': 'Solutions', 'link': 'https://youtube.com/playlist?list=PL6z25hk70QWwooWaK_Gf3U4C3LGUyhA3b&si=IeGBiXrLOSDNzqGY'}], 'semester2': [{'title': 'Optique', 'link': 'https://www.youtube.com/playlist?list=PLvhLrq3xUh-frxnqDvto3WsLUQSw4xmij'}]}, ['ستتعبك يا صديقي لكنها سهلة في السنة الثانية لاتخف', 'اعتمد على اليوتيوب بشكل كبير', 'اعتمد على شات جيبيتي كثيرا', 'حل المسائل التطبيقية بكثرة بكثرة'], ['فهم الأجهزة الطبية', 'تفسير القياسات الفيزيائية', 'أساس التصوير الطبي', 'فهم الآليات الفيزيائية للأمراض'])">
+                                <span class="subject-icon">⚡</span>BIOPHYSIQUE
+                            </li>
+                            <li
+                                onclick="showSubjectDetail('biostat', 'BIOSTAT', 'لا اعلم لماذا هي ضمن مواد الطب لكن تحملها فقط لانك لن تراها مجددا ابدا, لكنها سهلة ةتساعدك في رفع معدلك السنوي .', {'semester1': [{'title': 'Cours', 'link': 'https://drive.google.com/drive/folders/1C9X0D03QuRhBlOZ8nfswhHm5nw8mAMSj?usp=drive_link', 'difficulty': 'medium'}], 'semester2': [{'title': 'Cours', 'link': 'https://drive.google.com/drive/folders/1_q7eLd3-2OMKALRFhROGanTHVPNlCGNm?usp=drive_link', 'difficulty': 'medium'}]}, {'semester1': [{'title': 'STATISTIQUE', 'link': 'https://youtube.com/playlist?list=PLTuuQN_bAwZ4bUuYceiDHUELLU_u6UsyS&si=zXtWUm9Z2F5WjyWT'}, {'title': 'الاحتمالات', 'link': 'https://youtube.com/playlist?list=PLlaFpJcuzvllMcU6DLqNr-7s2HxeplpC3&si=Wa1F5GN-hlvGqIhH'}], 'semester2': []}, ['تدرب على برامج التحليل', 'افهم المفاهيم الأساسية', 'حل الكثير من المسائل', 'تعلم تفسير النتائج'], ['تحليل الأبحاث العلمية', 'تصميم الدراسات', 'تفسير النتائج السريرية', 'اتخاذ القرارات المبنية على الأدلة'])">
+                                <span class="subject-icon">📊</span>BIOSTAT
+                            </li>
+                            <li
+                                onclick="showSubjectDetail('ssh', 'SSH', 'دراسة العوامل الاجتماعية والسلوكية التي تؤثر على الصحة والمرض، وعلاقة الطبيب بالمريض والمجتمع. وكذلك تحمي حقوقك الطبية .', {'semester1': [{'title': 'Cours', 'link': 'https://drive.google.com/drive/folders/1CSSN_5C27yTZjznP9w7g1yVEWtA4jLd1?usp=drive_link', 'difficulty': 'hard'}]}, {'semester1': [], 'semester2': []}, ['ضمن المواد التي لن تلتقي بهم ابدا', 'تستطيع تاجيلها ودراستها عند اقتراب الامتحان', 'اعتمد على اليوتيوب بشكل نهائي', 'افهم المفاهيم واحفظها'], ['فهم العوامل الاجتماعية للأمراض', 'تحسين العلاقة مع المرضى', 'اتخاذ قرارات أخلاقية', 'العمل ضمن الفريق الصحي'])">
+                                <span class="subject-icon">👥</span>SSH
+                            </li>
+                            <li
+                                onclick="showSubjectDetail('embryologie', 'EMBRYOLOGIE', 'تتمحور حول تطور الجنين من الاخصاب الى الاسبوع الرابع من التطور الجنيني, المادة معقدة قليلا ومهمة كثيرا لكن الفيديوهات التي وضعتها لكم تساعدكم بشكل كبير جدا .', {'semester1': [{'title': 'Cours', 'link': 'https://drive.google.com/drive/folders/1CR7rYcjoJ_BWVZHST3RSoA5GhNSoOMFi?usp=drive_link', 'difficulty': 'hard'}]}, {'semester1': [{'title': 'Playlist', 'link': 'https://youtube.com/playlist?list=PLB3gueQInnKkrl8iQ24xszSHvvrGsz3Ud&si=msutfOyr58ir1j1v'}], 'semester2': []}, ['تابع مراحل التطور بالتسلسل', 'استخدم الرسوم المتحركة كثيرا', 'افهم المصطلحات قبل ما تحفظها', 'ركز على النقاط الحرجة والايام كثيرا'], ['فهم التشوهات الخلقية', 'أساس علم الوراثة', 'تفسير الحالات السريرية', 'مهم لطب النساء والتوليد'])">
+                                <span class="subject-icon">👶</span>EMBRYOLOGIE
+                            </li>
+                            <li
+                                onclick="showSubjectDetail('chimie', 'CHIMIE', 'من المواد التي ليست مهمة في الطب واراها كاضافة لرفع المعدل تدرسون حول الذرة والجزيئ في الفصل الثاني تصبح سهلة وممتعة وتميل قليلا الى الطب', {'semester1': [{'title': 'Cours 1', 'link': 'https://drive.google.com/file/d/1tLpi4wLbj_uTIMtRHE7DMM3K3s-gPPec/view?usp=drive_link', 'difficulty': 'medium'}], 'semester2': [{'title': 'Solution', 'link': 'https://docs.google.com/presentation/d/1XNBnClwKTSMqafRPB2Jd2Xq0P1m1WNU7/edit?usp=drive_link&ouid=106233026404999643178&rtpof=true&sd=true', 'difficulty': 'medium'}, {'title': 'Organique', 'link': 'https://docs.google.com/presentation/d/1RnAT6fooUe6CMJPzpRi3mG4dRHZy7l5F/edit?usp=drive_link&ouid=106233026404999643178&rtpof=true&sd=true', 'difficulty': 'easy'}, {'title': 'Stereochemique', 'link': 'https://docs.google.com/presentation/d/1wed_9uAeHJ8ypWPIv_GmZxFv-q1AnOhJ/edit?usp=drive_link&ouid=106233026404999643178&rtpof=true&sd=true', 'difficulty': 'medium'}, {'title': 'cenitique', 'link': 'https://docs.google.com/presentation/d/1NMN026bORuW4COUX0pOF7EgqNH4GgXTL/edit?usp=drive_link&ouid=106233026404999643178&rtpof=true&sd=true', 'difficulty': 'medium'}]}, {'semester1': [{'title': 'Playlist', 'link': 'https://youtube.com/playlist?list=PLgWzWDJ5fcXkXT1028nVW4HaAJXyjHOEH&si=B8bf8X_WOaPJDgXw'}, {'title': 'Playlist 2', 'link': 'https://youtube.com/playlist?list=PLgWzWDJ5fcXmijtRkLeBAbUY5QTr0gX7c&si=lwB8WzdFhocHgOws'}, {'title': 'Playlist 3', 'link': 'https://youtube.com/playlist?list=PLvYKeChoC24A6jhqboAovvktPsqLNlXx1&si=OR1IsEbrdS6F5DNX'}], 'semester2': [{'title': 'Playlist', 'link': 'https://youtube.com/playlist?list=PLkpUyH10WPwV578GrSfc0WvLjYCLgQgnE&si=DzYSja3PmwnEEewO'}]}, ['افهم الأساس النظري', 'حل التمارين التطبيقية', 'اربط بين الكيمياء والطب', 'استخدم النماذج الجزيئية'], ['أساس الكيمياء الحيوية', 'فهم تفاعلات الأدوية', 'تفسير نتائج المختبر', 'التحضير للصيدلة'])">
+                                <span class="subject-icon">⚗️</span>CHIMIE
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="year-card">
+                    <div class="year-header">
+                        <div class="year-number">2</div>
+                        <div class="year-title">السنة الثانية</div>
+                    </div>
+                    <div class="year-body">
+                        <h3
+                            style="color: var(--primary-dark); margin-bottom: 1.8rem; text-align: center; font-size: 1.4rem;">
+                            المواد الأساسية</h3>
+                        <ul class="subjects-list">
+                            <li
+                                onclick="showSubjectDetail('cardiovasculaire', 'CARDIOVASCULAIRE', 'دراسة الجهاز القلبي الوعائي، تركيبه، وظائفه، والأمراض التي تصيبه.', [{'title': 'Anatomique', 'link': 'https://drive.google.com/drive/folders/1m1IJPo2yc4djXSk1RpJ4hi9smO7C8HQk?usp=drive_link', 'difficulty': 'medium'}, {'title': 'Physiologie', 'link': 'https://drive.google.com/drive/folders/1tQ0YGtfyr3XUwmzaCQnKrURc2tVbgVjy?usp=drive_link', 'difficulty': 'hard'}, {'title': 'Biophysique', 'link': 'https://drive.google.com/drive/folders/1aiNVOxcXpJcc0CSrmwyOLVniw7__SLH2?usp=drive_link', 'difficulty': 'hard'}, {'title': 'Histologie', 'link': 'https://drive.google.com/drive/folders/17DDAtsFF12asjfpfEenvUVGtm_rMvfSo?usp=drive_link', 'difficulty': 'medium'}], null, ['استخدم الرسوم التوضيحية', 'ادرس الحالات السريرية', 'افهم الآليات الفسيولوجية', 'ربط بين التشريح والوظيفة'], ['أساس أمراض القلب', 'فهم ضغط الدم', 'تفسير تخطيط القلب', 'التعامل مع الطوارئ القلبية'])">
+                                <span class="subject-icon">🫀</span>CARDIO
+                            </li>
+                            <li
+                                onclick="showSubjectDetail('nerveux', 'NERVEUX', 'دراسة الجهاز العصبي، تركيبه، وظائفه، والاضطرابات التي تصيبه.', [], null, [], [])">
+                                <span class="subject-icon">🧠</span>NERVEUX
+                            </li>
+                            <li
+                                onclick="showSubjectDetail('digestif', 'DIGESTIF', 'دراسة الجهاز الهضمي، تركيبه، وظائفه، والأمراض التي تصيبه.', [{'title': 'Anatomie', 'link': 'https://drive.google.com/drive/folders/1OkXTN5dgbLo3oVluQo98r_e4h42-s4Ej?usp=drive_link', 'difficulty': 'medium'}, {'title': 'Biochimie', 'link': 'https://drive.google.com/drive/folders/1Qrkno1LCVGC07MRYyAZSITm00VwP-uKL?usp=drive_link', 'difficulty': 'easy'}, {'title': 'Histologie', 'link': 'https://drive.google.com/drive/folders/1-awFn-UtHWTtFOuzEUIoQyd-lWu1IdXs?usp=drive_link', 'difficulty': 'easy'}, {'title': 'Physiologie', 'link': 'https://drive.google.com/drive/folders/1fYSS4ZvCUk-t7KBBpR78rk8aMj5rs0Hc?usp=drive_link', 'difficulty': 'medium'}], null, ['استخدم الرسوم التوضيحية', 'ادرس الحالات السريرية', 'افهم الآليات الفسيولوجية', 'ربط بين الأعضاء المختلفة'], ['تشخيص الأمراض الهضمية', 'فهم سوء الامتصاص', 'التخطيط العلاجي', 'الوقاية من الأمراض'])">
+                                <span class="subject-icon">😋</span>DIGESTIF
+                            </li>
+                            <li
+                                onclick="showSubjectDetail('endocrineien', 'ENDOCRINEIEN', 'دراسة الغدد الصماء، الهرمونات التي تفرزها، وتأثيراتها على الجسم.', [], null, [], [])">
+                                <span class="subject-icon">⚖️</span>ENDOCRINEIEN
+                            </li>
+                            <li
+                                onclick="showSubjectDetail('urinaire', 'URINAIRE', 'دراسة الجهاز البولي، تركيبه، وظائفه، والأمراض التي تصيبه.', [{'title': 'Anatomie', 'link': 'https://drive.google.com/drive/folders/1-6vSXjW0CMAylAoX3aeC0CIj8-Wsx66M?usp=drive_link', 'difficulty': 'medium'}, {'title': 'Biochimie', 'link': 'https://drive.google.com/drive/folders/1H9s1QAiTS8uzSj8wKci0997AaC6oCaYD?usp=drive_link', 'difficulty': 'medium'}, {'title': 'Histologie', 'link': 'https://drive.google.com/drive/folders/1Ki6ok-KJ1CqV6w9oLgx5K-pB6XRHDmKL?usp=drive_link', 'difficulty': 'easy'}, {'title': 'Physiologie', 'link': 'https://drive.google.com/drive/folders/1aJ2hBJ5rgT0ZfL0hTlpLZ3ycZIPECBf2?usp=drive_link', 'difficulty': 'medium'}], null, ['استخدم الرسوم التوضيحية', 'ادرس الحالات السريرية', 'افهم الآليات الفسيولوجية', 'ربط بين التركيب والوظيفة'], ['تشخيص أمراض الكلى', 'فهم الفشل الكلوي', 'التخطيط العلاجي', 'الوقاية من الحصوات'])">
+                                <span class="subject-icon">💧</span>URINAIRE
+                            </li>
+                            <li
+                                onclick="showSubjectDetail('genetique', 'GENETIQUE', 'دراسة الوراثة، الجينات، والاضطرابات الوراثية التي تصيب الإنسان.', [], null, [], [])">
+                                <span class="subject-icon">🧬</span>GENETIQUE
+                            </li>
+                            <li
+                                onclick="showSubjectDetail('immunologie', 'IMMUNOLOGIE', 'دراسة جهاز المناعة والدفاعات الطبيعية للجسم ضد العوامل الممرضة والخلايا غير الطبيعية.', [], null, [], [])">
+                                <span class="subject-icon">🛡️</span>IMMUNOLOGIE
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="subjectDetailSection" class="subject-detail-section">
+                <div class="subject-header">
+                    <h2 id="subjectTitle">عنوان المادة</h2>
+                </div>
+                <div class="subject-overview">
+                    <h3>نبذة عن المادة</h3>
+                    <p id="subjectOverview">وصف المادة سيظهر هنا...</p>
+                </div>
+                <div class="content-grid">
+                    <div class="content-card">
+                        <h4>الدروس</h4>
+                        <div id="lessonsContent">
+                            < !-- Lessons will be populated here with link and difficulty -->
+                        </div>
+                    </div>
+                    <div class="content-card" id="videosCard">
+                        <h4>الفيديوهات</h4>
+                        <div id="videosContent">
+                            < !-- Videos will be populated here with video link -->
+                        </div>
+                    </div>
+                    <div class="content-card">
+                        <h4>طريقة المذاكرة</h4>
+                        <ul id="studyMethodsList">
+                            < !-- Study methods will be populated here -->
+                        </ul>
+                    </div>
+                    <div class="content-card">
+                        <h4>أهمية المادة</h4>
+                        <ul id="importanceList">
+                            < !-- Importance points will be populated here -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="study_map" class="page">
+            <div class="page-header">
+                <h1>خريطتك الدراسية</h1>
+                <p>أدوات ونصائح لتنظيم جدولك الدراسي وتحقيق أقصى استفادة من وقتك</p>
+            </div>
+
+            <div class="study-map-section">
+                <div class="study-tip-card">
+                    <h3>📅 تنظيم الوقت</h3>
+                    <p>الجدولة اليومية هي حجر الأساس للنجاح في كلية الطب</p>
+                    <ul>
+                        <li>خصص وقتًا يوميًا لمراجعة المحاضرات</li>
+                        <li>استخدم تقنية بومودورو (25 دقيقة دراسة + 5 دقائق راحة)</li>
+                        <li>حدد أولوياتك حسب صعوبة المادة وقرب الامتحان</li>
+                        <li>لا تنسَ تضمين وقت للراحة والنوم</li>
+                        <li>حدد الاهداف قبل ان تبدا الدراسة لتجهيز نفسك نفسيا قبل عقليا
+                            وبدنيا</li>
+                        <li>لا تعتمد على الناس في توقيت الدراسة لكل شخص وقته المفضل فانا عن
+                            نفسي اوقات احب الدراسة ليلا واوقات العكس احب الدراسة صباحا باكرا
+                        </li>
+                    </ul>
+                </div>
+                <div class="study-tip-card">
+                    <h3>🧠 تقنيات الحفظ</h3>
+                    <p>الطب يتطلب حفظ كم هائل من المعلومات — اجعله ذكيًا !</p>
+                    <ul>
+                        <li>استخدم بطاقات الفلاش (Anki مثالي لذلك)</li>
+                        <li>استخدم موقع او تطبيق NoteboolLM لانشاء مخططات سهلة الحفظ</li>
+                        <li>استخدم التشبيهات والقصص لتثبيت المعلومات</li>
+                        <li>كرر المعلومات في فترات متباعدة (Spaced Repetition)</li>
+                        <li>اهم شيئ هو حب تلك المادة ولو انها صعبة</li>
+                    </ul>
+                </div>
+                <div class="study-tip-card">
+                    <h3>📚 طرق الدراسة الفعّالة</h3>
+                    <p>الدراسة الذكية أفضل من الدراسة الطويلة !</p>
+                    <ul>
+                        <li>لا تكتفِ بالقراءة — اكتب، ارسم، علّم غيرك</li>
+                        <li>حل الأسئلة التطبيقية بعد كل موضوع les Qcms</li>
+                        <li>شكل مجموعات دراسة صغيرة (3-4 أشخاص)</li>
+                        <li>استخدم الخرائط الذهنية لربط المواضيع</li>
+                        <li>اعتمد على الذكاء الاصطناعي فانه يبسط لك الدروس او يرويها لك على
+                            شكل قصة</li>
+                        <li>يمكنك الطلب من الذكاء الاصطناعي ان ينشا لك اسئلة لتتدرب عليها
+                        </li>
+                    </ul>
+                </div>
+                <div class="study-tip-card">
+                    <h3>⚖️ التوازن بين الحياة والدراسة</h3>
+                    <p>لا تُهمل صحتك النفسية والجسدية !</p>
+                    <ul>
+                        <li>مارس الرياضة 3 مرات أسبوعيًا (حتى لو 20 دقيقة)</li>
+                        <li>احرص على 7-8 ساعات نوم يوميًا</li>
+                        <li>خصص وقتًا للعائلة والأصدقاء</li>
+                        <li>خذ يوم راحة كامل كل أسبوع</li>
+                        <li>لا تجعل حياتك تتوقف عند الطب فقط</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="resources-section">
+                <h2>أدوات مساعدة موصى بها</h2>
+                <div class="resource-grid">
+                    <div class="resource-card">
+                        <div class="resource-icon">🧠</div>
+                        <h4>Ankiو NotebookLM</h4>
+                        <p>تطبيق بطاقات فلاش ذكي يستخدم Spaced Repetition لتحسين الحفظ
+                            طويل المدى وخرائط ذهنية</p>
+                    </div>
+                    <div class="resource-card">
+                        <div class="resource-icon">🗓️</div>
+                        <h4>Notion / Google Calendar</h4>
+                        <p>لتنظيم جدولك الدراسي، تتبع التقدم، ووضع الأهداف الأسبوعية.
+                        </p>
+                    </div>
+                    <div class="resource-card">
+                        <div class="resource-icon">🎨</div>
+                        <h4>Drawabox / Sketchy</h4>
+                        <p>لتعلم الرسم التشريحي بطريقة مرئية وتفاعلية.</p>
+                    </div>
+                    <div class="resource-card">
+                        <div class="resource-icon">😎</div>
+                        <h4>APKS</h4>
+                        <p>تطبيقات 3D مدفوعة ساوفرها لكم ان شاء الله</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="mental_health" class="page">
+            <div class="page-header">
+                <h1>صحتك النفسية</h1>
+                <p>دعم نفسي للطلاب خلال سنوات الدراسة المكثفة</p>
+            </div>
+            <div class="empty-page">
+                <h2>سيتم إضافة المحتوى قريبًا</h2>
+                <p>يتم إضافة المحتوى قريبا</p>
+                <button class="btn" onclick="showPage('home')" style="margin-top: 1.8rem;">العودة إلى الرئيسية</button>
+            </div>
+        </section>
+
+        <section id="qcm" class="page">
+            <div class="page-header">
+                <h1>بنك الأسئلة (QCM)</h1>
+                <p>اختر السنة الدراسية ثم المادة للبدء في حل الأسئلة والتدريب</p>
+            </div>
+
+            <div id="qcm-year-selection" class="years-grid" style="margin-top: 2rem;">
+                <div class="year-card" onclick="showQcmSubjects(1)">
+                    <div class="year-header">
+                        <div class="year-number">1</div>
+                        <div class="year-title">السنة الأولى</div>
+                    </div>
+                </div>
+                <div class="year-card" onclick="showQcmSubjects(2)">
+                    <div class="year-header">
+                        <div class="year-number">2</div>
+                        <div class="year-title">السنة الثانية</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="qcm-subjects-container" style="display: none; margin-top: 2rem;">
+                <button class="btn" onclick="backToQcmYears()" style="margin-bottom: 2rem;">⬅ العودة لاختيار
+                    السنة</button>
+                <div id="qcm-subjects-grid" class="years-grid"
+                    style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                    <!-- Subjects will be injected here -->
+                </div>
+            </div>
+        </section>
+
+        <section id="qcm_detail" class="page">
+            <div class="page-header">
+                <h1 id="qcm-subject-title">المادة</h1>
+                <button class="btn" onclick="showPage('qcm')" style="margin-top: 1rem;">⬅ العودة للمواد</button>
+            </div>
+            <div id="qcm-detail-content" class="empty-page" style="margin-top: 2.5rem; text-align: center;">
+                <!-- Content will be injected here -->
+            </div>
+        </section>
+
+        <section id="about_us" class="page">
+            <div class="page-header">
+                <h1>من نحن</h1>
+                <p>موقع مصمم من طالب طب لزملائه الطلاب</p>
+            </div>
+            <div class="container about-section">
+
+                <div class="about-card">
+                    <h2>❓ لماذا أنشأنا هذا الموقع؟</h2>
+                    <p><strong>لأننا عشنا المشكلة الحقيقية:</strong></p>
+                    <ul>
+                        <li><strong>كثرة المصادر:</strong>عشرات الكتب والمواقع
+                            والفيديوهات بدون توجيه واضح</li>
+                        <li><strong>التشتت:</strong>لا تعرف من أين تبدأ أو ما الذي
+                            يجب أن تركز عليه</li>
+                        <li><strong>ضغط الدراسة:</strong>ساعات طويلة من الدراسة دون
+                            نتائج مرضية</li>
+                        <li><strong>نصائح متناقضة:</strong>كل شخص يعطيك نصيحة مختلفة
+                            تزيدك حيرة</li>
+                    </ul>
+                </div>
+
+                <div class="about-card">
+                    <h2>🌟 ما الذي يميزنا؟</h2>
+                    <ul>
+                        <li><strong>نرشّح مصادر قليلة ومجربة:</strong>لا نثقل
+                            عليك بالمعلومات، نختار لك الأفضل</li>
+                        <li><strong>نركز على كيف تدرس وليس ماذا
+                                تحفظ:</strong>نعلمك استراتيجيات الدراسة الذكية
+                        </li>
+                        <li><strong>نتحدث عن الصحة النفسية بصدق:</strong>لأن
+                            النجاح ليس فقط في الدرجات</li>
+                        <li><strong>المحتوى مكتوب من طلاب حاليين:</strong>نفهم
+                            تحدياتك لأننا نعيشها</li>
+                        <li><strong>لا نروّج للوهم أو الطرق
+                                السحرية:</strong>نؤمن أن النجاح يأتي بالجهد
+                            الذكي والاستمرارية</li>
+                    </ul>
+                </div>
+
+                <div class="about-card">
+                    <h2>🎯 لمن هذا الموقع؟</h2>
+                    <ul>
+                        <li><strong>طلاب الطب</strong>(خصوصًا السنوات
+                            الأولى)</li>
+                        <li><strong>من يشعر بالضياع أو الإرهاق</strong>في
+                            رحلته الأكاديمية</li>
+                        <li><strong>من يريد الدراسة بذكاء</strong>لا بعدد
+                            ساعات الدراسة</li>
+                    </ul>
+                    <div class="not-for">
+                        <h3>❌ هذا الموقع ليس لمن يبحث عن:</h3>
+                        <ul>
+                            <li>طرق مختصرة أو حلول سحرية</li>
+                            <li>الغش أو الاعتماد على الآخرين</li>
+                            <li>النتائج دون جهد حقيقي</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="about-card transparency-card">
+                    <h2>⚠️ الشفافية والمسؤولية</h2>
+                    <ul>
+                        <li><strong>لسنا أطباء مختصين بعد:</strong>نحن
+                            طلاب مثلنا مثل باقي الطلاب</li>
+                        <li><strong>المحتوى تعليمي
+                                وتجريبي:</strong>بناءً على تجاربنا
+                            الشخصية وتجارب زملائنا</li>
+                        <li><strong>لا يغني عن المراجع الرسمية أو
+                                الأساتذة:</strong>ننصح دائمًا بالرجوع
+                            للمصادر الأكاديمية المعتمدة</li>
+                    </ul>
+                </div>
+
+                <div class="human-touch">
+                    <p><strong>طالب مثلك • مررت بنفس الصعوبات •
+                            الموقع ينمو معكم</strong></p>
+                    <p>هذا يحول الموقع من "منصة" إلى "صديق" </p>
+                </div>
+
+                <div class="contact-info">
+                    <h3>📱 معلومات التواصل</h3>
+                    <p><strong>الاسم:</strong>أحمد</p>
+                    <p><strong>المرحلة الدراسية:</strong>سنة
+                        ثانية طب</p>
+                    <p><strong>البريد الإلكتروني:</strong><a href="mailto:medgpa00@gmail.com"
+                            class="contact-email">medgpa00@gmail.com</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container footer-content">
+            <p class="copyright">© 2026 MedNova - All Rights Reserved</p>
+            <p>منصة مخصصة لطلاب كليات الطب</p>
+        </div>
+    </footer>
+    <script> // Header scroll effect
+
+        window.addEventListener('scroll', function () {
+            const header = document.getElementById('mainHeader');
+
+            if (window.scrollY > 30) {
+                header.classList.add('scrolled');
+            }
+
+            else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        if (themeToggle) {
+            // Check for saved theme preference or respect OS preference
+            const savedTheme = localStorage.getItem('mednova_theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                body.classList.add('dark-mode');
+                themeToggle.textContent = '☀️';
+            }
+
+            else {
+                body.classList.remove('dark-mode');
+                themeToggle.textContent = '🌙';
+            }
+
+            themeToggle.addEventListener('click', () => {
+                body.classList.toggle('dark-mode');
+
+                if (body.classList.contains('dark-mode')) {
+                    themeToggle.textContent = '☀️';
+                    localStorage.setItem('mednova_theme', 'dark');
+                }
+
+                else {
+                    themeToggle.textContent = '🌙';
+                    localStorage.setItem('mednova_theme', 'light');
+                }
+            });
+        }
+
+        else {
+            console.error('Theme toggle button not found!');
+        }
+
+        // Show specific page function with active navigation
+        function showPage(pageId) {
+
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            // Hide subject detail section
+            document.getElementById('subjectDetailSection').classList.remove('active');
+            // Show the selected page
+            document.getElementById(pageId).classList.add('active');
+            // Update URL hash for bookmarking
+            window.location.hash = pageId;
+        }
+
+        // Switch semester function
+        function switchSemester(contentType, semester) {
+
+            // Update button states
+            const buttons = document.querySelectorAll(`.${contentType}-toggle .semester-btn`);
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Show selected semester content
+            const semesterContents = document.querySelectorAll(`#${contentType}Content .semester-content`);
+            semesterContents.forEach(content => content.classList.remove('active'));
+
+            document.getElementById(`${contentType}-${semester}`).classList.add('active');
+        }
+
+        // Show subject detail function
+        function showSubjectDetail(subjectId, title, overview, lessons, videos, studyMethods, importance) {
+            // Show the subject detail section
+            const detailSection = document.getElementById('subjectDetailSection');
+            detailSection.classList.add('active');
+
+            // Scroll to the section smoothly
+            detailSection.scrollIntoView({
+                behavior: 'smooth', block: 'start'
+            });
+
+            // Set the content
+            document.getElementById('subjectTitle').textContent = title;
+            document.getElementById('subjectOverview').textContent = overview;
+            // Check if it's a first year subject (has semester structure)
+            const isFirstYear = ['anatomie',
+                'biochimie',
+                'cytologie',
+                'physiologie',
+                'biophysique',
+                'biostat',
+                'ssh',
+                'embryologie',
+                'chimie'].includes(subjectId);
+
+            // Handle lessons
+            if (isFirstYear) {
+                // Create semester toggle for lessons
+                const lessonsContent = document.getElementById('lessonsContent');
+                lessonsContent.innerHTML = ` <div class="semester-toggle lessons-toggle"><button class="semester-btn active" onclick="switchSemester('lessons', 'semester1')">الفصل الأول</button><button class="semester-btn" onclick="switchSemester('lessons', 'semester2')">الفصل الثاني</button></div><div id="lessons-semester1" class="semester-content active"></div><div id="lessons-semester2" class="semester-content"></div>`;
+                // Populate lessons with semester structure
+                const lessonsSemester1 = document.getElementById('lessons-semester1');
+                const lessonsSemester2 = document.getElementById('lessons-semester2');
+                lessonsSemester1.innerHTML = '';
+                lessonsSemester2.innerHTML = '';
+
+                if (lessons.semester1 && lessons.semester1.length > 0) {
+                    lessons.semester1.forEach(lesson => {
+                        const lessonDiv = document.createElement('div');
+                        lessonDiv.className = 'lesson-item';
+                        let difficultyClass = 'medium';
+                        if (lesson.difficulty === 'easy') difficultyClass = 'easy';
+                        else if (lesson.difficulty === 'hard') difficultyClass = 'hard';
+
+                        // Create actual link element that opens in new tab
+                        lessonDiv.innerHTML = ` <div class="lesson-title" >${lesson.title}</div> <div class="lesson-details" > <a href="${lesson.link}" class="lesson-link" target="_blank" rel="noopener noreferrer" >رابط الدرس</a> <span class="difficulty ${difficultyClass}" > ${lesson.difficulty === 'easy' ? 'سهل' : lesson.difficulty === 'medium' ? 'متوسط' : 'صعب'} </span> </div> `;
+                        lessonsSemester1.appendChild(lessonDiv);
+                    });
+                }
+
+                else {
+                    lessonsSemester1.innerHTML = '<div class="empty-content">سيتم امتلاؤها قريبًا 🔴</div>';
+                }
+
+                if (lessons.semester2 && lessons.semester2.length > 0) {
+                    lessons.semester2.forEach(lesson => {
+                        const lessonDiv = document.createElement('div');
+                        lessonDiv.className = 'lesson-item';
+                        let difficultyClass = 'medium';
+                        if (lesson.difficulty === 'easy') difficultyClass = 'easy';
+                        else if (lesson.difficulty === 'hard') difficultyClass = 'hard';
+
+                        // Create actual link element that opens in new tab
+                        lessonDiv.innerHTML = ` <div class="lesson-title" >${lesson.title}</div> <div class="lesson-details" > <a href="${lesson.link}" class="lesson-link" target="_blank" rel="noopener noreferrer" >رابط الدرس</a> <span class="difficulty ${difficultyClass}" > ${lesson.difficulty === 'easy' ? 'سهل' : lesson.difficulty === 'medium' ? 'متوسط' : 'صعب'} </span> </div> `;
+                        lessonsSemester2.appendChild(lessonDiv);
+                    });
+                }
+
+                else {
+                    lessonsSemester2.innerHTML = '<div class="empty-content">سيتم امتلاؤها قريبًا 🔴</div>';
+                }
+            }
+
+            else {
+                // For second year subjects (no semester structure) - keep original format
+                const lessonsContent = document.getElementById('lessonsContent');
+                lessonsContent.innerHTML = '';
+
+                if (lessons.length > 0) {
+                    lessons.forEach(lesson => {
+                        const lessonDiv = document.createElement('div');
+                        lessonDiv.className = 'lesson-item';
+                        let difficultyClass = 'medium';
+                        if (lesson.difficulty === 'easy') difficultyClass = 'easy';
+                        else if (lesson.difficulty === 'hard') difficultyClass = 'hard';
+
+                        // Create actual link element that opens in new tab
+                        lessonDiv.innerHTML = ` <div class="lesson-title" >${lesson.title}</div> <div class="lesson-details" > <a href="${lesson.link}" class="lesson-link" target="_blank" rel="noopener noreferrer" >رابط الدرس</a> <span class="difficulty ${difficultyClass}" > ${lesson.difficulty === 'easy' ? 'سهل' : lesson.difficulty === 'medium' ? 'متوسط' : 'صعب'} </span> </div> `;
+                        lessonsContent.appendChild(lessonDiv);
+                    });
+                }
+
+                else {
+                    lessonsContent.innerHTML = '<div class="empty-content">سيتم امتلاؤها قريبًا 🔴</div>';
+                }
+            }
+
+            // Handle videos - hide videos card if videos is null
+            const videosCard = document.getElementById('videosCard');
+            const videosContent = document.getElementById('videosContent');
+
+            if (videos === null) {
+                // Hide the entire videos card
+                videosCard.style.display = 'none';
+            }
+
+            else {
+                // Show the videos card
+                videosCard.style.display = 'block';
+
+                if (isFirstYear) {
+                    // Create semester toggle for videos
+                    videosContent.innerHTML = ` <div class="semester-toggle videos-toggle"><button class="semester-btn active" onclick="switchSemester('videos', 'semester1')">الفصل الأول</button><button class="semester-btn" onclick="switchSemester('videos', 'semester2')">الفصل الثاني</button></div><div id="videos-semester1" class="semester-content active"></div><div id="videos-semester2" class="semester-content"></div>`;
+                    // Populate videos with semester structure
+                    const videosSemester1 = document.getElementById('videos-semester1');
+                    const videosSemester2 = document.getElementById('videos-semester2');
+                    videosSemester1.innerHTML = '';
+                    videosSemester2.innerHTML = '';
+
+                    if (videos.semester1 && videos.semester1.length > 0) {
+                        videos.semester1.forEach(video => {
+                            const videoDiv = document.createElement('div');
+                            videoDiv.className = 'video-item';
+
+                            // Create actual link element that opens in new tab
+                            videoDiv.innerHTML = ` <a href="${video.link}" class="video-link" target="_blank" rel="noopener noreferrer" > 📹 ${video.title} </a> `;
+                            videosSemester1.appendChild(videoDiv);
+                        });
+                    }
+
+                    else {
+                        videosSemester1.innerHTML = '<div class="empty-content">سيتم امتلاؤها قريبًا 🔴</div>';
+                    }
+
+                    if (videos.semester2 && videos.semester2.length > 0) {
+                        videos.semester2.forEach(video => {
+                            const videoDiv = document.createElement('div');
+                            videoDiv.className = 'video-item';
+
+                            // Create actual link element that opens in new tab
+                            videoDiv.innerHTML = ` <a href="${video.link}" class="video-link" target="_blank" rel="noopener noreferrer" > 📹 ${video.title} </a> `;
+                            videosSemester2.appendChild(videoDiv);
+                        });
+                    }
+
+                    else {
+                        videosSemester2.innerHTML = '<div class="empty-content">سيتم امتلاؤها قريبًا 🔴</div>';
+                    }
+                }
+
+                else {
+                    // This case shouldn't happen since second year has videos = null
+                    videosContent.innerHTML = '';
+
+                    if (videos.length > 0) {
+                        videos.forEach(video => {
+                            const videoDiv = document.createElement('div');
+                            videoDiv.className = 'video-item';
+
+                            // Create actual link element that opens in new tab
+                            videoDiv.innerHTML = ` <a href="${video.link}" class="video-link" target="_blank" rel="noopener noreferrer" > 📹 ${video.title} </a> `;
+                            videosContent.appendChild(videoDiv);
+                        });
+                    }
+
+                    else {
+                        videosContent.innerHTML = '<div class="empty-content">سيتم امتلاؤها قريبًا 🔴</div>';
+                    }
+                }
+            }
+
+            // Populate study methods
+            const studyMethodsList = document.getElementById('studyMethodsList');
+            studyMethodsList.innerHTML = '';
+
+            studyMethods.forEach(method => {
+                const li = document.createElement('li');
+                li.textContent = method;
+                studyMethodsList.appendChild(li);
+            });
+            // Populate importance
+            const importanceList = document.getElementById('importanceList');
+            importanceList.innerHTML = '';
+
+            importance.forEach(point => {
+                const li = document.createElement('li');
+                li.textContent = point;
+                importanceList.appendChild(li);
+            });
+            // Show the subject detail section with smooth scroll
+            const subjectSection = document.getElementById('subjectDetailSection');
+            subjectSection.classList.add('active');
+
+            // Scroll to the section
+            subjectSection.scrollIntoView({
+                behavior: 'smooth', block: 'start'
+            });
+        }
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1
+        }
+
+            ;
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show-el');
+                }
+            });
+        }
+
+            , observerOptions);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const hiddenElements = document.querySelectorAll('.year-card, .subject-overview, .content-card, .study-tip-card, .audience-card');
+
+            hiddenElements.forEach((el) => {
+                el.classList.add('hidden-el');
+                observer.observe(el);
+            });
+        });
+
+        // Handle page navigation on load
+        window.addEventListener('load', function () {
+            const hash = window.location.hash.substring(1);
+
+            if (hash && document.getElementById(hash)) {
+                showPage(hash);
+            }
+        });
+
+        // Add hover effects to year cards
+        document.querySelectorAll('.year-card').forEach(card => {
+            card.addEventListener('mouseenter', function () {
+                this.style.transform = 'translateY(-12px) rotateX(4deg)';
+                this.style.boxShadow = '0 28px 55px -12px rgba(0, 0, 0, 0.25)';
+            });
+
+            card.addEventListener('mouseleave', function () {
+                this.style.transform = 'translateY(0) rotateX(0)';
+                this.style.boxShadow = '0 20px 40px -10px rgba(0, 0, 0, 0.18)';
+            });
+        });
+
+        // Button hover effects
+        document.querySelectorAll('.btn').forEach(button => {
+            button.addEventListener('mouseenter', function () {
+                this.style.transform = 'translateY(-5px) scale(1.03)';
+                this.style.boxShadow = '0 10px 28px rgba(139, 92, 246, 0.5)';
+            });
+
+            button.addEventListener('mouseleave', function () {
+                this.style.transform = 'translateY(0) scale(1)';
+                this.style.boxShadow = '0 6px 20px rgba(139, 92, 246, 0.35)';
+            });
+        });
+
+        // Subject list item hover effects
+        document.querySelectorAll('.subjects-list li').forEach(item => {
+            item.addEventListener('mouseenter', function () {
+                this.style.color = '#4338ca';
+                this.style.transform = 'translateX(8px)';
+                this.style.background = '#f8fafc';
+                this.style.paddingLeft = '1.2rem';
+                this.style.boxShadow = '0 3px 10px rgba(79, 70, 229, 0.12)';
+            });
+
+            item.addEventListener('mouseleave', function () {
+                this.style.color = '';
+                this.style.transform = 'translateX(0)';
+                this.style.background = '';
+                this.style.paddingLeft = '';
+                this.style.boxShadow = 'none';
+            });
+        });
+
+        // QCM Logic
+        function showQcmSubjects(year) {
+            const grid = document.getElementById('qcm-subjects-grid');
+            const subjects_y1 = [
+                { id: 'anatomie', name: 'Anatomie', icon: '🦴', exams: [] },
+                { id: 'biochimie', name: 'Biochimie', icon: '🧪', exams: [] },
+                { id: 'cytologie', name: 'Cytologie', icon: '🔬', exams: [] },
+                { id: 'physiologie', name: 'Physiologie', icon: '🫀', exams: [] },
+                { id: 'biophysique', name: 'Biophysique', icon: '⚡', exams: [] },
+                { id: 'biostat', name: 'Biostat', icon: '📊', exams: [] },
+                { id: 'ssh', name: 'SSH', icon: '📚', exams: [] },
+                { id: 'embryologie', name: 'Embryologie', icon: '👶', exams: [] },
+                { id: 'chimie', name: 'Chimie', icon: '⚗️', exams: [] }
+            ];
+            const subjects_y2 = [
+                {
+                    id: 'cardiovascular',
+                    name: 'Cardio',
+                    icon: '🫀',
+                    exams: [
+                        { title: 'Controle Setif 2023', link: 'https://drive.google.com/file/d/1dNWH6Jwl5jjYvBn5RmRa36SF8Ca0Uzwk/view?usp=drive_link' },{ title: 'Controle Setif 2022', link: 'https://drive.google.com/file/d/16ANPv-4X2UPfMAaMReZTbnis70RiB92b/view?usp=drive_link' },{ title: 'Controle Setif 2022 Affichage', link: 'https://drive.google.com/file/d/1RWLKBNUGmltwYVdh1lrkFkU5Euph_ed4/view?usp=drive_link' },{ title: 'Controle Setif 2023 Affichage', link: 'https://drive.google.com/file/d/1S6FsDhIryLaFLf3pmvNpf57PwrxeecmI/view?usp=drive_link' }                      
+                    ]
+                },
+                { id: 'nerveux', name: 'Nerveux', icon: '🧠', exams: [{ title: 'Controle Setif 2023', link: 'https://drive.google.com/file/d/1WKH-aM8jWuCyRXVqKX-MJraBL9G3Z0oI/view?usp=drive_link' },{ title: 'Controle Setif 2022', link: 'https://drive.google.com/file/d/1gD35aNYgBIgS-9_AW7VB_E-Wf_QpGydM/view?usp=drive_link' },{ title: 'Controle Setif 2022 Affichage', link: 'https://drive.google.com/file/d/1hq9fJadEYYKfH07wLv0bFxbHFKozY9lJ/view?usp=drive_link' }] },
+                { id: 'digestif', name: 'Digestif', icon: '😋', exams: [{ title: 'Controle Setif 2023', link: 'https://drive.google.com/file/d/1fWgsh5qWq35fEQ1MZbHFS3ekuDboxJl7/view?usp=drive_link' },{ title: 'Controle Setif 2022', link: 'https://drive.google.com/file/d/1giHzRZRnD3ssJiwFsfO8eqzZLVp54sHi/view?usp=drive_link' },{ title: 'Controle Setif 2022 Affichage', link: 'https://drive.google.com/file/d/13CuQ38SvVzjf67PPdRWg0IAriAHv9obL/view?usp=drive_link' }] },
+                { id: 'endocrineien', name: 'Endocrineien', icon: '⚖️', exams: [{ title: 'Controle Setif 2023', link: 'https://drive.google.com/file/d/193ilB2f_k8Mr7hPzUu9aW3i3_Z-PunL7/view?usp=drive_link' },{ title: 'Controle Setif 2022', link: 'https://drive.google.com/file/d/1Vltn489LlZbbMvwzAxOXxM_pSDMDpk-C/view?usp=drive_link' },{ title: 'Controle Setif 2022 Affichage', link: 'https://drive.google.com/file/d/1NFZxQqGb0xkRWvyu-Zr7cPhIP0WQlyOC/view?usp=drive_link' },{ title: 'Controle Setif 2023 Affichage', link: 'https://drive.google.com/file/d/19RmHfAZfFkbotA0WfQthwAfGCKD8kL8U/view?usp=drive_link' }] },
+                { id: 'urinaire', name: 'Urinaire', icon: '💧', exams: [{ title: 'Controle Setif 2023', link: 'https://drive.google.com/file/d/1kYvzIJplP2OzmE6tUmrlcUXQYp-_-yPO/view?usp=drive_link' },{ title: 'Controle Setif 2022', link: 'https://drive.google.com/file/d/112xJUnuXwB9LOsRAnvJLaf-7jwegTZsz/view?usp=drive_link' },{ title: 'Controle Setif 2022 Affichage', link: 'https://drive.google.com/file/d/162oSGohUgn7iOi-PiVJ1o6oZiYT9U_IW/view?usp=drive_link' }] },
+                { id: 'genetique', name: 'Genetique', icon: '🧬', exams: [{ title: 'Controle Setif 2022', link: 'https://drive.google.com/file/d/1ec_8cXEYpxAGuq6cEQoIvrOv21xrAnAk/view?usp=drive_link' },{ title: 'Controle Setif 2022 Affichage', link: 'https://drive.google.com/file/d/1BrHEBKU8x0iVB-iUjwWyGVSQO5NjQBT1/view?usp=drive_link' }] },
+                { id: 'immunologie', name: 'Immunologie', icon: '🛡️', exams: [{ title: 'Controle Setif 2022', link: 'https://drive.google.com/file/d/1NI7pID9YQ-yQdpXnFp1ggnfW9lHCcb60/view?usp=drive_link' },{ title: 'Controle Setif 2022 Affichage', link: 'https://drive.google.com/file/d/1Ky0rnz2cUPIS3SYThpfw-jYsTP8T6aEF/view?usp=drive_link' }] }
+            ];
+
+            const currentSubjects = year === 1 ? subjects_y1 : subjects_y2;
+            grid.innerHTML = '';
+
+            currentSubjects.forEach(sub => {
+                const subCard = document.createElement('div');
+                subCard.className = 'year-card';
+                subCard.style.padding = '1.5rem';
+                subCard.style.textAlign = 'center';
+                subCard.innerHTML = `
+                    <div style="font-size: 2.5rem; margin-bottom: 1rem;">${sub.icon}</div>
+                    <div class="year-title" style="font-size: 1.2rem;">${sub.name}</div>
+                `;
+                subCard.onclick = () => showQcmDetail(sub.name, sub.exams);
+                grid.appendChild(subCard);
+
+                // Observe for animation
+                if (typeof observer !== 'undefined') {
+                    subCard.classList.add('hidden-el');
+                    observer.observe(subCard);
+                }
+            });
+
+            document.getElementById('qcm-year-selection').style.display = 'none';
+            document.getElementById('qcm-subjects-container').style.display = 'block';
+        }
+
+        function showQcmDetail(title, exams) {
+            const detailSection = document.getElementById('qcm_detail');
+            const titleEl = document.getElementById('qcm-subject-title');
+            const contentEl = document.getElementById('qcm-detail-content');
+
+            titleEl.textContent = `بنك أسئلة: ${title}`;
+
+            if (exams && exams.length > 0) {
+                let examsHTML = `
+                    <div style="max-width: 900px; margin: 0 auto; padding: 2rem 1rem;">
+                        <h2 style="color: var(--primary); margin-bottom: 2rem; font-size: 1.8rem;">الامتحانات المتاحة الآن 📝</h2>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+                `;
+
+                exams.forEach(exam => {
+                    examsHTML += `
+                        <div class="about-card" style="text-align: right; border: 1px solid var(--glass-border); display: flex; flex-direction: column; justify-content: space-between; transition: all 0.3s ease;">
+                            <div>
+                                <h3 style="color: var(--primary-dark); margin-bottom: 1rem; font-size: 1.2rem;">${exam.title}</h3>
+                                <p style="font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 1.5rem;">انقر على الزر أدناه لفتح الامتحان ومراجعة الأسئلة في نافذة جديدة.</p>
+                            </div>
+                            <a href="${exam.link}" class="btn" target="_blank" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.8rem; padding: 0.8rem; font-weight: 600;">
+                                <span>ابدأ الامتحان الآن 🚀</span>
+                            </a>
+                        </div>
+                    `;
+                });
+
+                examsHTML += `
+                        </div>
+                    </div>
+                `;
+                contentEl.innerHTML = examsHTML;
+            } else {
+                contentEl.innerHTML = `
+                    <div class="empty-page" style="padding: 4rem 1rem;">
+                        <h2 style="font-size: 2rem; margin-bottom: 1.5rem;">🚧 سيتم إضافة المحتوى قريباً</h2>
+                        <p style="font-size: 1.2rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto;">نحن نعمل حالياً على جمع وتنسيق أفضل مجموعة أسئلة (QCM) لمادة <strong>${title}</strong>. ترقبوا التحديث القادم!</p>
+                        <div style="font-size: 5rem; margin-top: 3rem; opacity: 0.2;">📚</div>
+                    </div>
+                `;
+            }
+
+            showPage('qcm_detail');
+        }
+
+        function backToQcmYears() {
+            document.getElementById('qcm-year-selection').style.display = 'grid';
+            document.getElementById('qcm-subjects-container').style.display = 'none';
+        }
+
+
+    </script>
+
+
+    <!-- Notifications System -->
+    <script src="js/notifications.js"></script>
+
+    <!-- Focus Mode -->
+    <script src="js/focus-mode.js"></script>
+
+    <!-- Achievements System -->
+    <script src="js/achievements.js"></script>
+
+    <!-- Study Calendar -->
+    <script src="js/calendar.js"></script>
+</body>
+
+</html>
+    
+  </body>
+  
+</html>
