@@ -1,6 +1,6 @@
 The MIT License (MIT)
 
-Copyright (c) 2026 Ahmed BenDakfal (https://codepen.io/Ahmed-BenDakfal/pen/wBzmpNZ)
+Copyright (c) 2026 Ahmed BenDakfal (https://codepen.io/editor/Ahmed-BenDakfal/pen/019d4214-b9e0-76d7-9b64-0dc31da5d1f0)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
